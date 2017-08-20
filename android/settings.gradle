@@ -1,0 +1,3 @@
+rootProject.name = 'where2party'
+
+include ':app'
