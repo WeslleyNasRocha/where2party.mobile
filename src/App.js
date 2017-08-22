@@ -19,15 +19,7 @@ class App extends Component {
             storageBucket: "where2party-51f6a.appspot.com",
             messagingSenderId: "519155446978"
         };
-        Firebase.initializeApp(config);
-
-        AsyncStorage.getItem("user_data")
-            .then((user_data_json) => {
-                let user_data = JSON.parse(user_data_json);
-                if (user_data != null) {
-                    Actions.Feed({ type: "replace", duration: 0 })
-                }
-            })
+        Firebase.initializeApp(config);        
     }
 
     render() {

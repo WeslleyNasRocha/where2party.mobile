@@ -6,7 +6,8 @@ import {
     LOGIN_USER_FAIL,
     LOGIN_USER_SUCCESS,
     CREATION_USER_ATTEMPT,
-    CREATION_USER_FAILED
+    CREATION_USER_FAILED,
+    LOGGED_USER
 } from '../Actions/Types';
 
 const AuthInitialState = {
@@ -14,7 +15,8 @@ const AuthInitialState = {
     password: "",
     loading: false,
     error: "",
-    user: null
+    user: null,
+    logged: false
 }
 export default Auth = (state = AuthInitialState, action) => {
     console.log(action);
@@ -62,7 +64,12 @@ export default Auth = (state = AuthInitialState, action) => {
                 ...AuthInitialState,
                 error: action.payload
             }
-            
+        case LOGGED_USER:
+            return {
+                ...state,
+                logged: true
+            }
+
         default:
             return state
     }

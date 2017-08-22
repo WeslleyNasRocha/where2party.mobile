@@ -10,9 +10,20 @@ import {
     Input,
     Button
 } from '../common';
-import { emailChanged, passwordChanged, loginAttempt } from "../../Actions"
+import { emailChanged, passwordChanged, loginAttempt, loggedUser } from "../../Actions"
 
 class LoginForm extends Component {
+
+    constructor(props) {
+        super(props);
+        AsyncStorage.getItem("user_data")
+            .then((user_data_json) => {
+                let user_data = JSON.parse(user_data_json);
+                if (user_data != null) {
+                    Actions.Feed({ type: "reset" });
+                }
+            })
+    }
 
     onEmailChange(text) {
         this.props.emailChanged(text);
@@ -81,17 +92,19 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-    const { email, password, loading, error } = auth;
+    const { email, password, loading, error, logged } = auth;
     return {
         email,
         password,
         loading,
-        error
+        error,
+        logged
     }
 }
 
 export default connect(mapStateToProps, {
     emailChanged,
     passwordChanged,
-    loginAttempt
+    loginAttempt,
+    loggedUser
 })(LoginForm);

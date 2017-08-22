@@ -8,7 +8,8 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     CREATION_USER_ATTEMPT,
-    CREATION_USER_FAILED
+    CREATION_USER_FAILED,
+    LOGGED_USER
 } from './Types';
 
 export const emailChanged = (text) => {
@@ -56,6 +57,19 @@ export const createAttempt = ({ email, password }) => {
                 createUserFailed(error);
             });
     }
+}
+
+export const loggedUser = () => {
+    return (dispatch) => {
+        AsyncStorage.getItem("user_data")
+            .then((user_data_json) => {
+                let user_data = JSON.parse(user_data_json);
+                if (user_data != null) {
+                    dispatch({ type: LOGGED_USER })
+                }
+            })
+    }
+
 }
 
 const createUserFailed = (error) => {
