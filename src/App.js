@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -21,13 +20,7 @@ class App extends Component {
         };
         Firebase.initializeApp(config);
 
-        AsyncStorage.getItem("user_data")
-            .then((user_data_json) => {
-                let user_data = JSON.parse(user_data_json);
-                if (user_data != null) {
-                    Actions.Feed({ type: "replace", duration: 0 })
-                }
-            })
+        
     }
 
     render() {
