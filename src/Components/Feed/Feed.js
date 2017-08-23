@@ -17,14 +17,20 @@ class Feed extends Component {
             <Container>
                 <Header>
                     <Left>
-                        <Icon name="menu" onPress={() => this.props.openDrawer()} />
+                        <Button transparent onPress={() => this.props.openDrawer()}>
+                            <Icon name="menu" />
+                        </Button>
                     </Left>
                     <Body>
                         <Title>Eventos</Title>
                     </Body>
-                    <Right />
+                    <Right>
+                        <Button transparent onPress={() => { Actions.createEvent() }}>
+                            <Icon name="add" />
+                        </Button>
+                    </Right>
                 </Header>
-                <Content>
+                <Content padder>
                     <Button
                         onPress={() => this.logout()}
                     >

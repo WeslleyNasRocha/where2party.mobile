@@ -4,6 +4,8 @@ import LoginForm from "./Components/Auth/LoginForm";
 import RegisterForm from "./Components/Auth/RegisterForm";
 import MainFeed from "./Components/Feed/MainFeed";
 import Splash from "./Components/Splash";
+import CreateEventForm from "./Components/Event/CreateEventForm"
+import Maps from "./Components/Event/Map"
 
 const Routers = () => {
     return (
@@ -19,14 +21,12 @@ const Routers = () => {
                     <Scene
                         key="login"
                         component={LoginForm}
-                        title="Porfavor Logue-se"
                         initial
                         hideNavBar={true}
                     />
                     <Scene
                         key="register"
                         component={RegisterForm}
-                        title="Preencha o cadastro"
                         hideNavBar={true}
                     />
                 </Scene>
@@ -34,8 +34,17 @@ const Routers = () => {
                     <Scene
                         key="mainFeed"
                         component={MainFeed}
-                        title="feed"
                         initial
+                        hideNavBar
+                    />
+                    <Scene
+                        key="createEvent"
+                        component={CreateEventForm}
+                        hideNavBar
+                    />
+                    <Scene
+                        key="map"
+                        component={Maps}
                         hideNavBar
                     />
                 </Scene>

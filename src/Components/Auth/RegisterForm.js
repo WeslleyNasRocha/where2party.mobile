@@ -47,7 +47,9 @@ class RegisterForm extends Component {
             <Container>
                 <Header>
                     <Left>
-                        <Icon name="ios-arrow-back" onPress={() => { Actions.login({ type: "back" }) }} />
+                        <Button transparent onPress={() => { Actions.pop() }}>
+                            <Icon name='arrow-back' />
+                        </Button>
                     </Left>
                     <Body>
                         <Title>Cadastre-se</Title>
