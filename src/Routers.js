@@ -2,8 +2,27 @@ import React, { Component } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
 import LoginForm from "./Components/Auth/LoginForm";
 import RegisterForm from "./Components/Auth/RegisterForm";
-import MainFeed from "./Components/Feed/MainFeed"
+import MainFeed from "./Components/Feed/MainFeed";
+import Splash from "./Components/Splash";
 
+const Routers = () => {
+
+    
+
+    return (
+        <Router>
+            <Scene key="root">
+                <Scene
+                    key="splash"
+                    initial
+                    component={Splash}
+                    hideNavBar
+                />
+                <Scene key="auth">
+                    <Scene
+                        sceneStyle={{ justifyContent: "center" }}
+                        key="login"
+                        component={LoginForm}
 
 
 class Routers extends Component {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -19,6 +18,7 @@ class App extends Component {
             storageBucket: "where2party-51f6a.appspot.com",
             messagingSenderId: "519155446978"
         };
+        Firebase.initializeApp(config);
         Firebase.initializeApp(config);        
     }
 
