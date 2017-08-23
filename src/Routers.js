@@ -7,36 +7,36 @@ import Splash from "./Components/Splash";
 
 const Routers = () => {
     return (
-        <Router>
-            <Scene key="root">
+        <Router hideNavBar={true} >
+            <Scene key="root" hideNavBar>
                 <Scene
                     key="splash"
                     initial
                     component={Splash}
                     hideNavBar
                 />
-                <Scene key="auth">
+                <Scene key="auth" hideNavBar>
                     <Scene
-                        sceneStyle={{ justifyContent: "center" }}
                         key="login"
                         component={LoginForm}
                         title="Porfavor Logue-se"
                         initial
+                        hideNavBar={true}
                     />
                     <Scene
-                        sceneStyle={{ paddingTop: 50 }}
                         key="register"
                         component={RegisterForm}
                         title="Preencha o cadastro"
+                        hideNavBar={true}
                     />
                 </Scene>
                 <Scene key="Feed">
                     <Scene
-                        sceneStyle={{ paddingTop: 50 }}
                         key="mainFeed"
                         component={MainFeed}
                         title="feed"
                         initial
+                        hideNavBar
                     />
                 </Scene>
             </Scene>

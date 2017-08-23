@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native'
-import { Actions } from "react-native-router-flux";
+import {
+    AppRegistry,
+    Text
+} from 'react-native';
 
-class MainFeed extends Component {
+import { Drawer } from 'native-base';
+import Sidebar from './SideBar';
+import Feed from './Feed';
 
-    logout() {
-        AsyncStorage.removeItem("user_data")
-            .then(Actions.auth({ type: "replace" }))
-    }
-
+export default class MainFeed extends Component {
+    closeDrawer = () => {
+        this.drawer._root.close()
+    };
+    openDrawer = () => {
+        this.drawer._root.open()
+    };
     render() {
         return (
-            <View>
-                <Text
-                    onPress={() => this.logout()}
-                >
-                    Log Out
-                </Text>
-            </View>
+            <Drawer
+                ref={(ref) => { this.drawer = ref; }}
+                content={<Sidebar />}
+                onClose={() => this.closeDrawer()} >
+
+                <Feed
+                    openDrawer={this.openDrawer.bind(this)}
+                />
+            </Drawer>
         );
     }
 }
-
-export default MainFeed;
