@@ -18,8 +18,7 @@ class App extends Component {
             storageBucket: "where2party-51f6a.appspot.com",
             messagingSenderId: "519155446978"
         };
-        Firebase.initializeApp(config);
-        Firebase.initializeApp(config);        
+        Firebase.initializeApp(config);      
     }
 
     render() {

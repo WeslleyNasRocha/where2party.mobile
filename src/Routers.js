@@ -6,9 +6,6 @@ import MainFeed from "./Components/Feed/MainFeed";
 import Splash from "./Components/Splash";
 
 const Routers = () => {
-
-    
-
     return (
         <Router>
             <Scene key="root">
@@ -23,42 +20,29 @@ const Routers = () => {
                         sceneStyle={{ justifyContent: "center" }}
                         key="login"
                         component={LoginForm}
-
-
-class Routers extends Component {
-    render() {
-        return (
-            <Router>
-                <Scene key="root">
-                    <Scene key="auth" initial>
-                        <Scene
-                            sceneStyle={{ justifyContent: "center" }}
-                            key="login"
-                            component={LoginForm}
-
-                            title="Porfavor Logue-se"
-                            initial
-                        />
-                        <Scene
-                            sceneStyle={{ paddingTop: 50 }}
-                            key="register"
-                            component={RegisterForm}
-                            title="Preencha o cadastro"
-                        />
-                    </Scene>
-                    <Scene key="Feed">
-                        <Scene
-                            sceneStyle={{ paddingTop: 50 }}
-                            key="mainFeed"
-                            component={MainFeed}
-                            title="feed"
-                            initial
-                        />
-                    </Scene>
+                        title="Porfavor Logue-se"
+                        initial
+                    />
+                    <Scene
+                        sceneStyle={{ paddingTop: 50 }}
+                        key="register"
+                        component={RegisterForm}
+                        title="Preencha o cadastro"
+                    />
                 </Scene>
-            </Router>
-        );
-    }
+                <Scene key="Feed">
+                    <Scene
+                        sceneStyle={{ paddingTop: 50 }}
+                        key="mainFeed"
+                        component={MainFeed}
+                        title="feed"
+                        initial
+                    />
+                </Scene>
+            </Scene>
+        </Router>
+    );
 }
+
 
 export default Routers;
