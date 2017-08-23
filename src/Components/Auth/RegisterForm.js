@@ -87,6 +87,9 @@ class RegisterForm extends Component {
                             <Text>Cadastrar-me</Text>
                         </Button>
                     </Form>
+                    <Spinner
+                        visible={this.props.loading}
+                    />
                 </Content>
             </Container>
             // <Card>

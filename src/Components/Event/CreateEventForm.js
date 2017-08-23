@@ -17,7 +17,8 @@ import {
     InputGroup,
     Icon,
     Label,
-    Text
+    Text,
+    StyleProvider
 } from 'native-base';
 
 import { event } from '../../Reducers';
@@ -31,6 +32,7 @@ class CreateEventForm extends Component {
 
     render() {
         return (
+
             <Container>
                 <Header>
                     <Left>

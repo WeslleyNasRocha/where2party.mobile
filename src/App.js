@@ -4,8 +4,12 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from "redux-thunk";
 import Firebase from 'firebase';
+import { StyleProvider } from 'native-base';
 import Routers from './Routers';
 import Reducers from './Reducers';
+
+import getTheme from '../native-base-theme/components';
+import material from '../native-base-theme/variables/commonColor';
 
 class App extends Component {
 
@@ -18,14 +22,16 @@ class App extends Component {
             storageBucket: "where2party-51f6a.appspot.com",
             messagingSenderId: "519155446978"
         };
-        Firebase.initializeApp(config);      
+        Firebase.initializeApp(config);
     }
 
     render() {
         const store = createStore(Reducers, {}, applyMiddleware(ReduxThunk));
         return (
             <Provider store={store}>
-                <Routers />
+                <StyleProvider style={getTheme(material)}>
+                    <Routers />
+                </StyleProvider>
             </Provider>
         );
     }

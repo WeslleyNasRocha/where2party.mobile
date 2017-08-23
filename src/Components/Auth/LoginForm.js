@@ -113,41 +113,11 @@ class LoginForm extends Component {
                             <Text>Não sou cadastrado</Text>
                         </Button>
                     </Form>
+                    <Spinner
+                        visible={this.props.loading}
+                    />
                 </Content>
             </Container>
-
-            // <Card>
-            //     <CardSection>
-            //         <Input
-            //             label="Email"
-            //             onChangeText={this.onEmailChange.bind(this)}
-            //             value={this.props.email}
-            //         />
-            //     </CardSection>
-            //     <CardSection>
-            //         <Input
-            //             label="Senha"
-            //             secure
-            //             onChangeText={this.onPasswordChange.bind(this)}
-            //             value={this.props.password}
-            //         />
-            //     </CardSection>
-            //     <CardSection>
-            //         <Button
-            //             onPress={() => Actions.register()}
-            //         >
-            //             Cadastre-se
-            //         </Button>
-            //         <Button
-            //             onPress={this.onButtonPress.bind(this)}
-            //         >
-            //             Login
-            //         </Button>
-            //     </CardSection>
-            //     <Spinner
-            //         visible={this.props.loading}
-            //     />
-            // </Card>
         );
     }
 }

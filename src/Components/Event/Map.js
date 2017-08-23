@@ -1,26 +1,96 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native'
-import { Container, Content, Text, Button } from 'native-base'
+import { connect } from "react-redux";
+import { Container, Content, Text, Button, Icon } from 'native-base'
 import MapView from 'react-native-maps';
 
-module.exports = class MyApp extends React.Component {
+import { saveGpsLocation } from "../../Actions";
+import { event } from "../../Reducers"
+
+class MyApp extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            region: new MapView.AnimatedRegion({
+                latitude: null,
+                longitude: null,
+                latitudeDelta: null,
+                longitudeDelta: null
+            }),
+            currentLocale: {
+                latitude: 0,
+                longitude: 0,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121
+            },
+            marker: {
+                latitude: 37.78825,
+                longitude: -122.4324
+            }
+        }
+    }
+
+    componentWillMount = () => {
+        this.setState({
+            region: {
+                latitude: -22.909938399999998,
+                longitude: -47.0626332,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121
+            }
+        });
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    currentLocale: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121
+                    }
+                })
+            },
+            (error) => {
+                console.log(error)
+            },
+            { enableHighAccuracy: false, timeout: 20000, maximumAge: 10000 });
+    }
+
+    getLocale() {
+        this.mapa.animateToRegion(this.state.currentLocale, 2000);
+    }
+
+    setLocale() {
+        this.props.Local = this.state.currentLocale;
+        console.log(this.props.Local);
+        this.props.saveGpsLocation(this.state.currentLocale);
+    }
+
     render() {
         const { region } = this.props;
         console.log(region);
-
         return (
             <View style={styles.container}>
                 <MapView
+                    showsUserLocation
                     style={styles.map}
-                    region={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.015,
-                        longitudeDelta: 0.0121,
-                    }}
+                    region={this.state.region}
+                    ref={ref => (this.mapa = ref)}
                 >
-                    <MapView.Marker></MapView.Marker>
+                    <MapView.Marker coordinate={this.state.marker} />
                 </MapView>
+                <Button
+                    transparent
+                    onPress={() => { this.getLocale() }}
+                >
+                    <Icon name="md-locate" />
+                </Button>
+                <Button
+                    onPress={() => { this.setLocale() }}
+                >
+                    <Text>Save locale</Text>
+                </Button>
             </View>
         );
     }
@@ -39,4 +109,11 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Map;
+const mapStateToProps = ({ event }) => {
+    const { Local } = event;
+    return {
+        Local
+    }
+}
+
+export default connect(mapStateToProps, { saveGpsLocation })(Map);
