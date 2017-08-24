@@ -9,7 +9,7 @@ import Sidebar from './SideBar';
 import Feed from './Feed';
 
 export default class MainFeed extends Component {
-    closeDrawer = () => {
+        closeDrawer = () => {
         this.drawer._root.close()
     };
     openDrawer = () => {

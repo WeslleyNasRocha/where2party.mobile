@@ -68,7 +68,6 @@ class LoginForm extends Component {
         return (
 
             <Container style={{backgroundColor: '#9c27b0'}}>
-                
                 <Content padder>
                     <Image
                         source={require("../../../assets/img/Logo2.png")}
@@ -109,7 +108,7 @@ class LoginForm extends Component {
                             icon
                             onPress={() => Actions.register()}
                         >
-                            <Icon name='settings'/>
+                            <Icon name='add-circle'/>
                             <Text style={{color:'rgba(255,255,255,0.8)', alignSelf: "center"}}>Cadastrar-se</Text>
                         </Button>
                     </Form>

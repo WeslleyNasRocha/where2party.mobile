@@ -7,11 +7,7 @@ import SideBar from "./SideBar";
 
 class Feed extends Component {
 
-    logout() {
-        AsyncStorage.removeItem("user_data")
-            .then(Actions.auth({ type: "replace" }))
-    }
-
+    
     render() {
         return (
             <Container>
@@ -31,13 +27,7 @@ class Feed extends Component {
                     </Right>
                 </Header>
                 <Content padder>
-                    <Button
-                        onPress={() => this.logout()}
-                    >
-                        <Text>
-                            Log Out
-                        </Text>
-                    </Button>
+                    
                 </Content>
             </Container>
         );

@@ -62,9 +62,9 @@ class RegisterForm extends Component {
                         style={{ height: 150, width: 150, alignSelf: "center" }}
                     />
                     <Form>
-                        <Item floatingLabel>
+                        <Item floatingLabel>                        
                             <Label style={{color:'rgba(255,255,255,0.6)'}}>Email</Label>
-                            <Input
+                          <Input
                                 keyboardType="email-address"
                                 returnKeyType="next"
                                 onChangeText={this.onEmailChange.bind(this)}
