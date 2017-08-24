@@ -6,7 +6,8 @@ import {
     LOGIN_USER_SUCCESS,
     CREATION_USER_ATTEMPT,
     CREATION_USER_FAILED,
-    LOGGED_USER
+    LOGGED_USER,
+    BACK_FORM
 } from '../Actions/Types';
 
 const AuthInitialState = {
@@ -61,12 +62,18 @@ export default Auth = (state = AuthInitialState, action) => {
             return {
                 ...state,
                 ...AuthInitialState,
-                error: action.payload
+                error: action.payload,
+                loading: false
             }
         case LOGGED_USER:
             return {
                 ...state,
                 logged: true
+            }
+        case BACK_FORM:
+            return {
+                ...state,
+                ...AuthInitialState
             }
 
         default:

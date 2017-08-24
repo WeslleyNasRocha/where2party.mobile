@@ -16,7 +16,7 @@ export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeD
             type: SAVE_GPS_LOCALE,
             payload: ({ latitude, longitude, latitudeDelta, longitudeDelta })
         });
-        Geocoder.setApiKey('AIzaSyCfFFFdJlI48cbO-nFOSj3xTYXX_yropPI'); // use a valid API key 
+        Geocoder.setApiKey('AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI'); // use a valid API key 
 
 
         console.log(Geocoder);

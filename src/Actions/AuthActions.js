@@ -9,7 +9,8 @@ import {
     LOGIN_USER_FAIL,
     CREATION_USER_ATTEMPT,
     CREATION_USER_FAILED,
-    LOGGED_USER
+    LOGGED_USER,
+    BACK_FORM
 } from './Types';
 
 export const emailChanged = (text) => {
@@ -52,8 +53,21 @@ export const createAttempt = ({ email, password }) => {
             })
             .catch((error) => {
                 console.log(error);
-                createUserFailed(error);
+                dispatch({
+                    type: CREATION_USER_FAILED,
+                    payload: error.message
+                });
             });
+    }
+}
+
+export const backForm = () => {
+
+    return (dispatch) => {
+        dispatch({
+            type: BACK_FORM
+        })
+        Actions.pop()
     }
 }
 
@@ -67,14 +81,6 @@ export const loggedUser = () => {
                 }
             })
     }
-
-}
-
-const createUserFailed = (error) => {
-    dispatch({
-        type: CREATION_USER_FAILED,
-        payload: error
-    })
 }
 
 

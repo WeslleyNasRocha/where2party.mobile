@@ -20,8 +20,7 @@ import {
     Label,
     Text
 } from 'native-base';
-//import { Card, CardSection, Input, Button } from '../common';
-import { passwordChanged, emailChanged, createAttempt } from '../../Actions';
+import { passwordChanged, emailChanged, createAttempt, backForm } from '../../Actions';
 import { auth } from '../../Reducers';
 
 
@@ -36,23 +35,36 @@ class RegisterForm extends Component {
     }
 
     onButtonPress() {
-        console.log(this.props);
+        //console.log(this.props);
         const { email, password } = this.props
         this.props.createAttempt({ email, password });
+    }
+
+    componentDidUpdate() {
+        if (this.props.error !== "") {
+            const toast = Toast.show(this.props.error, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0
+            });
+        };
     }
 
 
     render() {
         return (
-            <Container style={{backgroundColor:'#9c27b0'}}>
+            <Container style={{ backgroundColor: '#9c27b0' }}>
                 <Header>
                     <Left>
-                        <Button transparent onPress={() => { Actions.pop() }}>
+                        <Button transparent onPress={() => this.props.backForm()}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>
-                        <Title style={{color:'rgba(255,255,255,0.8)'}}>Cadastre-se</Title>
+                        <Title style={{ color: 'rgba(255,255,255,0.8)' }}>Cadastre-se</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -62,9 +74,9 @@ class RegisterForm extends Component {
                         style={{ height: 150, width: 150, alignSelf: "center" }}
                     />
                     <Form>
-                        <Item floatingLabel>                        
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Email</Label>
-                          <Input
+                        <Item floatingLabel>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Email</Label>
+                            <Input
                                 keyboardType="email-address"
                                 returnKeyType="next"
                                 onChangeText={this.onEmailChange.bind(this)}
@@ -72,7 +84,7 @@ class RegisterForm extends Component {
                             />
                         </Item>
                         <Item floatingLabel last>
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Senha</Label>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Senha</Label>
                             <Input
                                 secureTextEntry
                                 onChangeText={this.onPasswordChange.bind(this)}
@@ -86,7 +98,7 @@ class RegisterForm extends Component {
                             style={{ marginTop: 20 }}
                             onPress={() => { this.onButtonPress() }}
                         >
-                            <Icon name='beer'/>                        
+                            <Icon name='beer' />
                             <Text>Let's go Party!</Text>
                         </Button>
                     </Form>
@@ -95,49 +107,24 @@ class RegisterForm extends Component {
                     />
                 </Content>
             </Container>
-            // <Card>
-            //     <CardSection>
-            //         <Input
-            //             label="Email"
-            //             onChangeText={this.onEmailChange.bind(this)}
-            //             value={this.props.email}
-            //         />
-            //     </CardSection>
-            //     <CardSection>
-            //         <Input
-            //             label="Senha"
-            //             secure
-            //             onChangeText={this.onPasswordChange.bind(this)}
-            //             value={this.props.password}
-            //         />
-            //     </CardSection>
-            //     <CardSection>
-            //         <Button
-            //             onPress={this.onButtonPress.bind(this)}
-            //         >
-            //             Cadastrar
-            //         </Button>
-            //     </CardSection>
-            //     <Spinner
-            //         visible={this.props.loading}
-            //     />
-            // </Card>
         )
     }
 }
 
 const mapStateToProps = ({ auth }) => {
-    const { email, password, loading, success } = auth;
+    const { email, password, loading, success, error } = auth;
     return {
         email,
         password,
         loading,
-        success
+        success,
+        error
     }
 }
 
 export default connect(mapStateToProps, {
     emailChanged,
     passwordChanged,
-    createAttempt
+    createAttempt,
+    backForm
 })(RegisterForm);

@@ -35,18 +35,10 @@ class CreateEventForm extends Component {
         //this.setState({ address: json.results[0].formatted_address })},
     }
 
-
-    componentDidUpdate() {
-        if (this.props.Local != null) {
-
-
-        }
-    }
-
     render() {
         return (
 
-            <Container style={{backgroundColor: '#9c27b0'}}>
+            <Container style={{ backgroundColor: '#9c27b0' }}>
                 <Header>
                     <Left>
                         <Button transparent onPress={() => { Actions.pop() }} >
@@ -60,15 +52,15 @@ class CreateEventForm extends Component {
                 <Content>
                     <Form>
                         <Item >
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Titulo</Label>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Titulo</Label>
                             <Input
                                 onChangeText={text => this.props.formValueChanged({ prop: "Titulo", value: text })}
                                 value={this.props.Titulo}
                             />
                         </Item>
                         <Item>
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Local</Label>
-                            <Input />
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Local</Label>
+                            <Input value={this.props.Address} />
                             <Icon
                                 active
                                 onPress={() => Actions.map()}
@@ -77,27 +69,27 @@ class CreateEventForm extends Component {
 
                         </Item>
                         <Item >
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Descrição</Label>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Descrição</Label>
                             <Input
                                 onChangeText={text => this.props.formValueChanged({ prop: "Titulo", value: text })}
                                 value={this.props.Titulo}
                             />
                         </Item>
                         <Item last>
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Tags</Label>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Tags</Label>
                             <Input />
                         </Item>
                         <Item last>
-                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Data</Label>
+                            <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Data</Label>
                             <Input />
                         </Item>
-                        <Button 
+                        <Button
                             iconLeft
                             style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
                             block
                             onPress={() => this.onButtonPress()}
                         >
-                            <Text style={{color:'rgba(255,255,255,0.8)'}}> Criar evento</Text>
+                            <Text style={{ color: 'rgba(255,255,255,0.8)' }}> Criar evento</Text>
                         </Button>
                     </Form>
                 </Content>
