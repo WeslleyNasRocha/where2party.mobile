@@ -10,7 +10,7 @@ class Feed extends Component {
     
     render() {
         return (
-            <Container>
+            <Container style={{backgroundColor: '#9c27b0'}}>
                 <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.openDrawer()}>
@@ -18,7 +18,7 @@ class Feed extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Eventos</Title>
+                        <Title style={{ alignSelf: 'center', marginLeft: 65 }}>Eventos</Title>
                     </Body>
                     <Right>
                         <Button transparent onPress={() => { Actions.createEvent() }}>
