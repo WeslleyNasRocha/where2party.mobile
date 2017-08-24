@@ -7,7 +7,7 @@ import MapView from 'react-native-maps';
 import { saveGpsLocation } from "../../Actions";
 import { event } from "../../Reducers"
 
-class MyApp extends React.Component {
+class Map extends Component {
     constructor(props) {
         super(props);
 
@@ -62,14 +62,12 @@ class MyApp extends React.Component {
     }
 
     setLocale() {
-        this.props.Local = this.state.currentLocale;
-        console.log(this.props.Local);
-        this.props.saveGpsLocation(this.state.currentLocale);
+        const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state.currentLocale;
+        this.props.saveGpsLocation({ latitude, longitude, latitudeDelta, longitudeDelta });
     }
 
     render() {
         const { region } = this.props;
-        console.log(region);
         return (
             <View style={styles.container}>
                 <MapView

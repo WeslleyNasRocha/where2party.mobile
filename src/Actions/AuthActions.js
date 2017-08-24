@@ -27,7 +27,6 @@ export const passwordChanged = (text) => {
 };
 
 export const loginAttempt = ({ email, password }) => {
-    console.log({ email, password });
     return (dispatch) => {
         dispatch({ type: LOGIN_USER_ATTEMPT });
 
@@ -44,7 +43,6 @@ export const loginAttempt = ({ email, password }) => {
 };
 
 export const createAttempt = ({ email, password }) => {
-    console.log({ email, password });
     return (dispatch) => {
         dispatch({ type: CREATION_USER_ATTEMPT });
 

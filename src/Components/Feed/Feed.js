@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import Toast from "react-native-root-toast";
-import { Actions } from "react-native-router-flux";
-import { Container, Content, Header, Left, Body, Right, Title, Button, Text, Icon, Drawer } from "native-base"
+import { Actions, ActionConst } from "react-native-router-flux";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { Container, Content, Header, Left, Body, Right, Title, Button, Text, Drawer } from "native-base"
 import SideBar from "./SideBar";
 
 class Feed extends Component {
 
     logout() {
         AsyncStorage.removeItem("user_data")
-            .then(Actions.auth({ type: "replace" }))
+            .then(Actions.auth(ActionConst.BACK))
     }
 
     render() {
@@ -18,7 +19,7 @@ class Feed extends Component {
                 <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.openDrawer()}>
-                            <Icon name="menu" />
+                            <Icon name="menu" size={30} color={"#ffffff"} />
                         </Button>
                     </Left>
                     <Body>
@@ -26,11 +27,12 @@ class Feed extends Component {
                     </Body>
                     <Right>
                         <Button transparent onPress={() => { Actions.createEvent() }}>
-                            <Icon name="add" />
+                            <Icon name="plus" size={30} color={"#ffffff"} />
                         </Button>
                     </Right>
                 </Header>
                 <Content padder>
+
                     <Button
                         onPress={() => this.logout()}
                     >

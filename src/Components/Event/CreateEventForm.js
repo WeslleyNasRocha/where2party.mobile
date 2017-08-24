@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import Geocoder from 'react-native-geocoding';
 import {
     Container,
     Content,
@@ -24,10 +25,22 @@ import {
 import { event } from '../../Reducers';
 import { eventCreated, formValueChanged } from "../../Actions"
 
+
+
 class CreateEventForm extends Component {
+
 
     onButtonPress() {
         console.log("pressed");
+        //this.setState({ address: json.results[0].formatted_address })},
+    }
+
+
+    componentDidUpdate() {
+        if (this.props.Local != null) {
+
+
+        }
     }
 
     render() {
@@ -55,7 +68,7 @@ class CreateEventForm extends Component {
                         </Item>
                         <Item>
                             <Label>Local</Label>
-                            <Input />
+                            <Input value={this.props.Address} />
                             <Icon
                                 active
                                 onPress={() => Actions.map()}
@@ -91,11 +104,12 @@ class CreateEventForm extends Component {
 }
 
 const mapStateToProps = ({ event }) => {
-    const { Titulo, Descricao, Local, Tags, Data } = event;
+    const { Titulo, Descricao, Local, Tags, Data, Address } = event;
     return {
         Titulo,
         Descricao,
         Local,
+        Address,
         Tags,
         Data
     }
