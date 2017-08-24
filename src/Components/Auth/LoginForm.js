@@ -67,22 +67,15 @@ class LoginForm extends Component {
     render() {
         return (
 
-            <Container>
-                <Header>
-                    <Left />
-                    <Body>
-                        <Title>Faça o login</Title>
-                    </Body>
-                    <Right />
-                </Header>
+            <Container style={{backgroundColor: '#9c27b0'}}>
                 <Content padder>
                     <Image
-                        source={require("../../../assets/img/Logo.png")}
-                        style={{ height: 150, width: 150, alignSelf: "center" }}
+                        source={require("../../../assets/img/Logo2.png")}
+                        style={{ height: 200, width: 200, alignSelf: "center", marginTop: 15 }}
                     />
                     <Form>
                         <Item floatingLabel>
-                            <Label>Email</Label>
+                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Email</Label>
                             <Input
                                 keyboardType="email-address"
                                 returnKeyType="next"
@@ -91,7 +84,7 @@ class LoginForm extends Component {
                             />
                         </Item>
                         <Item floatingLabel last>
-                            <Label>Senha</Label>
+                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Senha</Label>
                             <Input
                                 secureTextEntry
                                 onChangeText={this.onPasswordChange.bind(this)}
@@ -100,17 +93,23 @@ class LoginForm extends Component {
                         </Item>
                         <Button
                             block
-                            style={{ marginTop: 20 }}
+                            icon
+                            style={{ marginTop: 30, marginRight: 30, marginLeft: 30 }}
+                            rounded
                             onPress={() => { this.onButtonPress() }}
                         >
-                            <Text>Login</Text>
+                        <Icon name='people'/>
+                            <Text style={{color:'rgba(255,255,255,0.8)'}}>Login</Text>
                         </Button>
                         <Button
-                            transparent
+                            style={{ marginTop: 20, marginRight: 30, marginLeft: 30 }}
+                            rounded
                             block
+                            icon
                             onPress={() => Actions.register()}
                         >
-                            <Text>Não sou cadastrado</Text>
+                            <Icon name='add-circle'/>
+                            <Text style={{color:'rgba(255,255,255,0.8)', alignSelf: "center"}}>Cadastrar-se</Text>
                         </Button>
                     </Form>
                     <Spinner

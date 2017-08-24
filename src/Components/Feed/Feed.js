@@ -8,14 +8,10 @@ import SideBar from "./SideBar";
 
 class Feed extends Component {
 
-    logout() {
-        AsyncStorage.removeItem("user_data")
-            .then(Actions.auth(ActionConst.BACK))
-    }
-
+    
     render() {
         return (
-            <Container>
+            <Container style={{backgroundColor: '#9c27b0'}}>
                 <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.openDrawer()}>
@@ -23,7 +19,7 @@ class Feed extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Eventos</Title>
+                        <Title style={{ alignSelf: 'center', marginLeft: 65 }}>Eventos</Title>
                     </Body>
                     <Right>
                         <Button transparent onPress={() => { Actions.createEvent() }}>
@@ -32,14 +28,7 @@ class Feed extends Component {
                     </Right>
                 </Header>
                 <Content padder>
-
-                    <Button
-                        onPress={() => this.logout()}
-                    >
-                        <Text>
-                            Log Out
-                        </Text>
-                    </Button>
+                    
                 </Content>
             </Container>
         );

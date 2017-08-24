@@ -44,7 +44,7 @@ class RegisterForm extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{backgroundColor:'#9c27b0'}}>
                 <Header>
                     <Left>
                         <Button transparent onPress={() => { Actions.pop() }}>
@@ -52,19 +52,19 @@ class RegisterForm extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Cadastre-se</Title>
+                        <Title style={{color:'rgba(255,255,255,0.8)'}}>Cadastre-se</Title>
                     </Body>
                     <Right />
                 </Header>
                 <Content padder>
                     <Image
-                        source={require("../../../assets/img/Logo.png")}
+                        source={require("../../../assets/img/Logo2.png")}
                         style={{ height: 150, width: 150, alignSelf: "center" }}
                     />
                     <Form>
-                        <Item floatingLabel>
-                            <Label>Email</Label>
-                            <Input
+                        <Item floatingLabel>                        
+                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Email</Label>
+                          <Input
                                 keyboardType="email-address"
                                 returnKeyType="next"
                                 onChangeText={this.onEmailChange.bind(this)}
@@ -72,7 +72,7 @@ class RegisterForm extends Component {
                             />
                         </Item>
                         <Item floatingLabel last>
-                            <Label>Senha</Label>
+                            <Label style={{color:'rgba(255,255,255,0.6)'}}>Senha</Label>
                             <Input
                                 secureTextEntry
                                 onChangeText={this.onPasswordChange.bind(this)}
@@ -81,10 +81,13 @@ class RegisterForm extends Component {
                         </Item>
                         <Button
                             block
+                            rounded
+                            icon
                             style={{ marginTop: 20 }}
                             onPress={() => { this.onButtonPress() }}
                         >
-                            <Text>Cadastrar-me</Text>
+                            <Icon name='beer'/>                        
+                            <Text>Let's go Party!</Text>
                         </Button>
                     </Form>
                     <Spinner
