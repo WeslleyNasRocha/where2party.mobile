@@ -7,7 +7,3 @@ export const CREATION_USER_ATTEMPT = "creation_user_attempt";
 export const CREATION_USER_FAILED = "creation_user_failed";
 export const BACK_FORM = "back_form";
 export const LOGGED_USER = "logged_user";
-export const EVENT_CREATED = "event_created";
-export const FORM_VALUE_CHANGED = "form_value_changed";
-export const SAVE_GPS_LOCALE = "save_gps_locale";
-export const CONVERT_GPS_TO_ADDRESS = "convert_gps_to_address";

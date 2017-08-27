@@ -64,6 +64,14 @@ class Map extends Component {
     setLocale() {
         const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state.currentLocale;
         this.props.saveGpsLocation({ latitude, longitude, latitudeDelta, longitudeDelta });
+        this.setState({
+            region: {
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: latitudeDelta,
+                longitudeDelta: longitudeDelta
+            }
+        })
     }
 
     render() {

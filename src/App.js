@@ -13,17 +13,28 @@ import material from '../native-base-theme/variables/commonColor';
 
 class App extends Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props)
+        this.state = {
+            config: false
+        }
+    }
+
+    componentWillMount = () => {
         const config = {
             apiKey: "AIzaSyAiceitFuCvdfw0xATK2FYRPgpVBkp9q4E",
             authDomain: "where2party-51f6a.firebaseapp.com",
             databaseURL: "https://where2party-51f6a.firebaseio.com",
             projectId: "where2party-51f6a",
             storageBucket: "where2party-51f6a.appspot.com",
-            messagingSenderId: "519155446978"
+            messagingSenderId: "519155446978",
+            name: "where2partyAndroid"
         };
-        Firebase.initializeApp(config);
+        if (!Firebase.apps.length) {
+            Firebase.initializeApp(config);
+        }
     }
+
 
     render() {
         const store = createStore(Reducers, {}, applyMiddleware(ReduxThunk));

@@ -1,6 +1,15 @@
 import { Actions } from 'react-native-router-flux';
 import Geocoder from "react-native-geocoding";
-import { EVENT_CREATED, FORM_VALUE_CHANGED, SAVE_GPS_LOCALE, CONVERT_GPS_TO_ADDRESS } from './Types';
+import Firebase from "firebase"
+import {
+    EVENT_CREATED,
+    EVENT_CREATE_ATTEMPT,
+    FORM_VALUE_CHANGED,
+    SAVE_GPS_LOCALE,
+    CONVERT_GPS_TO_ADDRESS,
+    DATE_TIME_STATUS,
+    DATE_TIME_CONFIRMED
+} from './Types';
 
 export const formValueChanged = ({ prop, value }) => {
     return {
@@ -37,6 +46,38 @@ export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeD
 }
 
 
-export const eventCreated = ({ titulo, descricao, local, tags, data }) => {
-    console.log({ titulo, descricao, local, tags, data });
+export const eventCreated = ({ Titulo, Address, Local, Descricao, Tags, Data }) => {
+    console.log({ Titulo, Address, Descricao, Tags, Local, Data });
+    return (dispatch) => {
+        dispatch({
+            type: EVENT_CREATE_ATTEMPT
+        });
+        Firebase.database().ref("eventos")
+            .push({ Titulo, Address, Descricao, Tags, Local, Data })
+            .then(
+            dispatch({
+                type: EVENT_CREATED
+            })
+            )
+            .catch(
+            (error) => console.log(error)
+            );
+    }
 };
+
+export const dateTimeModalStatus = (status) => {
+    return ({
+        type: DATE_TIME_STATUS,
+        payload: status
+    })
+}
+
+export const dateTimeConfirm = (date) => {
+
+    const data = new Date(date);
+
+    return ({
+        type: DATE_TIME_CONFIRMED,
+        payload: data.toLocaleDateString("pt-BR")
+    })
+}

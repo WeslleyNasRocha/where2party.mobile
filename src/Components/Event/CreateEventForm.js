@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Keyboard, View, TouchableWithoutFeedback } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Geocoder from 'react-native-geocoding';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {
     Container,
     Content,
@@ -23,7 +25,12 @@ import {
 } from 'native-base';
 
 import { event } from '../../Reducers';
-import { eventCreated, formValueChanged } from "../../Actions"
+import {
+    eventCreated,
+    formValueChanged,
+    dateTimeModalStatus,
+    dateTimeConfirm,
+} from "../../Actions"
 
 
 
@@ -31,8 +38,19 @@ class CreateEventForm extends Component {
 
 
     onButtonPress() {
+
+        const { Titulo, Address, Descricao, Tags, Local, Data } = this.props;
         console.log("pressed");
-        //this.setState({ address: json.results[0].formatted_address })},
+        this.props.eventCreated({ Titulo, Address, Local, Descricao, Tags, Data });
+    }
+
+    modalStatus(status) {
+        this.props.dateTimeModalStatus(status = !this.props.StatusDateTime);
+    }
+
+    modalConfirm = (date) => {
+        this.props.dateTimeConfirm(date);
+        this.modalStatus(false);
     }
 
     render() {
@@ -71,17 +89,24 @@ class CreateEventForm extends Component {
                         <Item >
                             <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Descrição</Label>
                             <Input
-                                onChangeText={text => this.props.formValueChanged({ prop: "Titulo", value: text })}
-                                value={this.props.Titulo}
+                                onChangeText={text => this.props.formValueChanged({ prop: "Descricao", value: text })}
+                                value={this.props.Descricao}
                             />
                         </Item>
                         <Item last>
                             <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Tags</Label>
                             <Input />
                         </Item>
-                        <Item last>
+                        <Item last
+                            onPress={() => {
+                                this.modalStatus()
+                            }}
+                        >
                             <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Data</Label>
-                            <Input />
+                            <Input
+                                editable={false}
+                                value={this.props.Data}
+                            />
                         </Item>
                         <Button
                             iconLeft
@@ -92,6 +117,15 @@ class CreateEventForm extends Component {
                             <Text style={{ color: 'rgba(255,255,255,0.8)' }}> Criar evento</Text>
                         </Button>
                     </Form>
+                    <DateTimePicker
+                        isVisible={this.props.StatusDateTime}
+                        onCancel={() => this.modalStatus(false)}
+                        onConfirm={this.modalConfirm}
+                    />
+
+                    <Spinner
+                        visible={this.props.Loading}
+                    />
                 </Content>
             </Container>
         );
@@ -99,15 +133,31 @@ class CreateEventForm extends Component {
 }
 
 const mapStateToProps = ({ event }) => {
-    const { Titulo, Descricao, Local, Tags, Data, Address } = event;
+    const {
+        Titulo,
+        Descricao,
+        Local,
+        Tags,
+        Data,
+        Address,
+        StatusDateTime,
+        Loading
+    } = event;
     return {
         Titulo,
         Descricao,
         Local,
         Address,
         Tags,
-        Data
+        Data,
+        StatusDateTime,
+        Loading
     }
 }
 
-export default connect(mapStateToProps, { formValueChanged, eventCreated })(CreateEventForm);
+export default connect(mapStateToProps, {
+    formValueChanged,
+    eventCreated,
+    dateTimeModalStatus,
+    dateTimeConfirm
+})(CreateEventForm);
