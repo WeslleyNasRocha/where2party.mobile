@@ -41,6 +41,7 @@ class SideBar extends Component {
                         <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: "center" }}>Alterar Perfil</Text>
                     </Button>
                     <Button
+                        onPress={() => { Actions.configuracao() }}
                         iconLeft
                         block
                         style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
