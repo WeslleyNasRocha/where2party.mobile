@@ -1,17 +1,42 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, ListView, RefreshControl } from 'react-native';
+import { connect } from "react-redux"
 import Toast from "react-native-root-toast";
+import Firebase from "firebase"
 import { Actions, ActionConst } from "react-native-router-flux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import { Container, Content, Header, Left, Body, Right, Title, Button, Text, Drawer } from "native-base"
+import {
+    Container,
+    Content,
+    Header,
+    Left,
+    Body,
+    Right,
+    Title,
+    Button,
+    Text,
+    Drawer,
+    Card,
+    CardItem,
+} from "native-base"
 import SideBar from "./SideBar";
+// Import reducer and actions
 
 class Feed extends Component {
 
-    
+    onRefreshPress = () => {
+        console.log();
+
+        Firebase.database().ref('/eventos/').once("value")
+            .then((snapshot) => {
+                console.log(snapshot.val());
+            })
+    }
+
+
     render() {
         return (
-            <Container style={{backgroundColor: '#9c27b0'}}>
+            <Container style={{ backgroundColor: '#9c27b0' }}>
                 <Header>
                     <Left>
                         <Button transparent onPress={() => this.props.openDrawer()}>
@@ -28,11 +53,28 @@ class Feed extends Component {
                     </Right>
                 </Header>
                 <Content padder>
-                    
+                    <Button transparent style={{ alignSelf: "center" }}
+                        onPress={() => this.onRefreshPress()}
+                    >
+                        <Icon name="refresh" size={30} color={"#ffffff"} />
+                    </Button>
+                    <ListView refreshControl={
+                        <RefreshControl
+                            refreshing={true}
+                        />
+                    }
+                    >
+
+                    </ListView>
                 </Content>
             </Container>
         );
     }
 }
 
-export default Feed;
+const mapStateToProps = () => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, {})(Feed);

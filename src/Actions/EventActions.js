@@ -48,12 +48,13 @@ export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeD
 
 export const eventCreated = ({ Titulo, Address, Local, Descricao, Tags, Data }) => {
     console.log({ Titulo, Address, Descricao, Tags, Local, Data });
+    const user = Firebase.auth().currentUser.uid
     return (dispatch) => {
         dispatch({
             type: EVENT_CREATE_ATTEMPT
         });
         Firebase.database().ref("eventos")
-            .push({ Titulo, Address, Descricao, Tags, Local, Data })
+            .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user })
             .then(
             dispatch({
                 type: EVENT_CREATED

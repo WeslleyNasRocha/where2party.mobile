@@ -40,7 +40,6 @@ class CreateEventForm extends Component {
     onButtonPress() {
 
         const { Titulo, Address, Descricao, Tags, Local, Data } = this.props;
-        console.log("pressed");
         this.props.eventCreated({ Titulo, Address, Local, Descricao, Tags, Data });
     }
 
