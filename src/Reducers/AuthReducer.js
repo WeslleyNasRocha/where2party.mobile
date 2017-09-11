@@ -8,43 +8,42 @@ import {
   CREATION_USER_FAILED,
   LOGGED_USER,
   BACK_FORM
-} from "../Actions/Types";
+} from '../Actions/Types';
 
 const AuthInitialState = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
   loading: false,
-  error: "",
+  error: '',
   user: null,
   logged: false
 };
-export default (Auth = (state = AuthInitialState, action) => {
-  console.log(action);
+export default (state = AuthInitialState, action) => {
   switch (action.type) {
     case PASSWORD_CHANGED:
       return {
         ...state,
         password: action.payload,
-        error: ""
+        error: ''
       };
     case EMAIL_CHANGED:
       return {
         ...state,
         email: action.payload,
-        error: ""
+        error: ''
       };
     case LOGIN_USER_ATTEMPT:
       return {
         ...state,
         loading: true,
-        error: ""
+        error: ''
       };
     case LOGIN_USER_FAIL:
       return {
         ...state,
-        password: "",
+        password: '',
         loading: false,
-        error: "Usuario ou senha incorretos"
+        error: 'Usuario ou senha incorretos'
       };
     case LOGIN_USER_SUCCESS:
       return {
@@ -56,7 +55,7 @@ export default (Auth = (state = AuthInitialState, action) => {
       return {
         ...state,
         loading: true,
-        error: ""
+        error: ''
       };
     case CREATION_USER_FAILED:
       return {
@@ -79,4 +78,4 @@ export default (Auth = (state = AuthInitialState, action) => {
     default:
       return state;
   }
-});
+};

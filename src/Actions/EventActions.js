@@ -1,6 +1,7 @@
-import { Actions } from "react-native-router-flux";
-import Geocoder from "react-native-geocoding";
-import Firebase from "firebase";
+import { Actions } from 'react-native-router-flux';
+import Geocoder from 'react-native-geocoding';
+import Firebase from 'firebase';
+import RNFetchBlob from 'react-native-fetch-blob';
 import {
   EVENT_CREATED,
   EVENT_CREATE_ATTEMPT,
@@ -8,8 +9,11 @@ import {
   SAVE_GPS_LOCALE,
   CONVERT_GPS_TO_ADDRESS,
   DATE_TIME_STATUS,
-  DATE_TIME_CONFIRMED
-} from "./Types";
+  DATE_TIME_CONFIRMED,
+  CANCEL_FORM_EVENT,
+  EVENT_IMAGE_CHANGE,
+  EVENT_IMAGE_OVERSIZE
+} from './Types';
 
 export const formValueChanged = ({ prop, value }) => {
   return {
@@ -18,19 +22,14 @@ export const formValueChanged = ({ prop, value }) => {
   };
 };
 
-export const saveGpsLocation = ({
-  latitude,
-  longitude,
-  latitudeDelta,
-  longitudeDelta
-}) => {
+export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
   console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
   return dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
       payload: { latitude, longitude, latitudeDelta, longitudeDelta }
     });
-    Geocoder.setApiKey("AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI"); // use a valid API key
+    Geocoder.setApiKey('AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI'); // use a valid API key
 
     console.log(Geocoder);
     Geocoder.getFromLatLng(latitude, longitude).then(
@@ -54,23 +53,60 @@ export const eventCreated = ({
   Local,
   Descricao,
   Tags,
-  Data
+  Data,
+  ImageData,
+  ImagePath,
+  ImageMime
 }) => {
-  console.log({ Titulo, Address, Descricao, Tags, Local, Data });
+  console.log({
+    path,
+    Titulo,
+    Address,
+    Descricao,
+    Tags,
+    Local,
+    Data,
+    ImagePath,
+    ImageData,
+    ImageMime
+  });
+  const path = ImagePath.replace('file://', '');
   const user = Firebase.auth().currentUser.uid;
   return dispatch => {
     dispatch({
       type: EVENT_CREATE_ATTEMPT
     });
-    Firebase.database()
-      .ref("eventos")
-      .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user })
-      .then(
-        dispatch({
-          type: EVENT_CREATED
+
+    const polyfill = RNFetchBlob.polyfill;
+
+    window.XMLHttpRequest = polyfill.XMLHttpRequest;
+    window.Blob = polyfill.Blob;
+
+    const rnfbURI = RNFetchBlob.wrap(path);
+
+    const image = `${Date.now}${user}.png`;
+
+    Blob.build(rnfbURI, { type: 'image/png;' }).then(blob => {
+      // upload image using Firebase SDK
+      Firebase.storage()
+        .ref('eventImages')
+        .child(image)
+        .put(blob, { contentType: 'image/png' })
+        .then(() => {
+          Firebase.database()
+            .ref('eventos')
+            .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user, image })
+            .then(
+              dispatch({
+                type: EVENT_CREATED
+              })
+              Actions.pop()
+            )
+            .catch(error => console.log(error));
+          blob.close();
         })
-      )
-      .catch(error => console.log(error));
+        .catch(error => console.log(error));
+    });
   };
 };
 
@@ -86,6 +122,19 @@ export const dateTimeConfirm = date => {
 
   return {
     type: DATE_TIME_CONFIRMED,
-    payload: data.toLocaleDateString("pt-BR")
+    payload: data.toLocaleDateString('pt-BR')
+  };
+};
+
+export const eventImageChange = ({ path, size, data, mime }) => {
+  if (size <= 1048576) {
+    return { type: EVENT_IMAGE_CHANGE, payload: { path, base64: data, mime } };
+  }
+  return { type: EVENT_IMAGE_OVERSIZE };
+};
+
+export const cancelForm = () => {
+  return {
+    type: CANCEL_FORM_EVENT
   };
 };

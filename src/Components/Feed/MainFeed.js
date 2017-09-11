@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { AppRegistry, Text } from "react-native";
+import React, { Component } from 'react';
 
-import { Drawer } from "native-base";
-import Sidebar from "./SideBar";
-import Feed from "./Feed";
+import { Drawer } from 'native-base';
+import Sidebar from './SideBar';
+import Feed from './Feed';
 
 export default class MainFeed extends Component {
   closeDrawer = () => {
@@ -18,7 +17,7 @@ export default class MainFeed extends Component {
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<Sidebar />}
+        content={<Sidebar closeDrawer={this.closeDrawer.bind(this)} />}
         onClose={() => this.closeDrawer()}
       >
         <Feed openDrawer={this.openDrawer.bind(this)} />

@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
-import { Image } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
-import Toast from "react-native-root-toast";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Image } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import Toast from 'react-native-root-toast';
 import {
   Container,
   Header,
@@ -19,16 +18,24 @@ import {
   Input,
   Label,
   Text
-} from "native-base";
-import {
-  passwordChanged,
-  emailChanged,
-  createAttempt,
-  backForm
-} from "../../Actions";
-import { auth } from "../../Reducers";
+} from 'native-base';
+import { passwordChanged, emailChanged, createAttempt, backForm } from '../../Actions';
+import { auth } from '../../Reducers';
 
 class RegisterForm extends Component {
+  componentDidUpdate() {
+    if (this.props.error !== '') {
+      const toast = Toast.show(this.props.error, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0
+      });
+    }
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -43,22 +50,9 @@ class RegisterForm extends Component {
     this.props.createAttempt({ email, password });
   }
 
-  componentDidUpdate() {
-    if (this.props.error !== "") {
-      const toast = Toast.show(this.props.error, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0
-      });
-    }
-  }
-
   render() {
     return (
-      <Container style={{ backgroundColor: "#9c27b0" }}>
+      <Container style={{ backgroundColor: '#9c27b0' }}>
         <Header>
           <Left>
             <Button transparent onPress={() => this.props.backForm()}>
@@ -66,20 +60,18 @@ class RegisterForm extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ color: "rgba(255,255,255,0.8)" }}>
-              Cadastre-se
-            </Title>
+            <Title style={{ color: 'rgba(255,255,255,0.8)' }}>Cadastre-se</Title>
           </Body>
           <Right />
         </Header>
         <Content padder>
           <Image
-            source={require("../../../assets/img/Logo2.png")}
-            style={{ height: 150, width: 150, alignSelf: "center" }}
+            source={require('../../../assets/img/Logo2.png')}
+            style={{ height: 150, width: 150, alignSelf: 'center' }}
           />
           <Form>
             <Item floatingLabel>
-              <Label style={{ color: "rgba(255,255,255,0.6)" }}>Email</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Email</Label>
               <Input
                 keyboardType="email-address"
                 returnKeyType="next"
@@ -88,7 +80,7 @@ class RegisterForm extends Component {
               />
             </Item>
             <Item floatingLabel last>
-              <Label style={{ color: "rgba(255,255,255,0.6)" }}>Senha</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Senha</Label>
               <Input
                 secureTextEntry
                 onChangeText={this.onPasswordChange.bind(this)}

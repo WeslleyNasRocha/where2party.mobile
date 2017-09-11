@@ -5,21 +5,27 @@ import {
   SAVE_GPS_LOCALE,
   CONVERT_GPS_TO_ADDRESS,
   DATE_TIME_STATUS,
-  DATE_TIME_CONFIRMED
-} from "../Actions/Types";
+  DATE_TIME_CONFIRMED,
+  CANCEL_FORM_EVENT,
+  EVENT_IMAGE_OVERSIZE,
+  EVENT_IMAGE_CHANGE
+} from '../Actions/Types';
 
 const EventInitialState = {
-  Titulo: "",
-  Descricao: "",
+  Titulo: '',
+  Descricao: '',
   Local: null,
-  Address: "",
+  Address: '',
   Tags: [],
-  Data: "",
+  Data: '',
+  ImagePath: 'http://via.placeholder.com/300x200',
+  ImageData: '',
+  Error: '',
   StatusDateTime: false,
-  Loading: false
+  Loading: false,
+  ImageMime: ''
 };
-export default (Event = (state = EventInitialState, action) => {
-  console.log(state);
+export default (state = EventInitialState, action) => {
   switch (action.type) {
     case FORM_VALUE_CHANGED:
       return {
@@ -57,7 +63,26 @@ export default (Event = (state = EventInitialState, action) => {
         StatusDateTime: false,
         Data: action.payload
       };
+    case EVENT_IMAGE_CHANGE:
+      //console.log(action.payload);
+      return {
+        ...state,
+        ImagePath: action.payload.path,
+        ImageData: action.payload.base64,
+        ImageMime: action.payload.mime
+      };
+    case EVENT_IMAGE_OVERSIZE:
+      return {
+        ...state,
+        ImagePath: 'http://via.placeholder.com/300x200',
+        Error: 'Arquivo muito grande'
+      };
+    case CANCEL_FORM_EVENT:
+      return {
+        ...state,
+        ...EventInitialState
+      };
     default:
       return state;
   }
-});
+};

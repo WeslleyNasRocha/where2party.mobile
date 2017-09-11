@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
-import { connect } from "react-redux";
-import Toast from "react-native-root-toast";
-import Spinner from "react-native-loading-spinner-overlay";
-import { Actions } from "react-native-router-flux";
-import { Image } from "react-native";
+import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
+import Toast from 'react-native-root-toast';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { Actions } from 'react-native-router-flux';
+import { Image } from 'react-native';
 import {
   Container,
   Header,
@@ -20,23 +20,31 @@ import {
   Input,
   Label,
   Text
-} from "native-base";
-import {
-  emailChanged,
-  passwordChanged,
-  loginAttempt,
-  loggedUser
-} from "../../Actions";
+} from 'native-base';
+import { emailChanged, passwordChanged, loginAttempt, loggedUser } from '../../Actions';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    AsyncStorage.getItem("user_data").then(user_data_json => {
-      let user_data = JSON.parse(user_data_json);
-      if (user_data != null) {
-        Actions.Feed({ type: "reset" });
+    AsyncStorage.getItem('user_data').then(userDataJson => {
+      const userData = JSON.parse(userDataJson);
+      if (userData != null) {
+        Actions.Feed({ type: 'reset' });
       }
     });
+  }
+
+  componentDidUpdate() {
+    if (this.props.error !== '') {
+      const toast = Toast.show(this.props.error, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0
+      });
+    }
   }
 
   onEmailChange(text) {
@@ -53,35 +61,22 @@ class LoginForm extends Component {
     this.props.loginAttempt({ email, password });
   }
 
-  componentDidUpdate() {
-    if (this.props.error !== "") {
-      const toast = Toast.show(this.props.error, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0
-      });
-    }
-  }
-
   render() {
     return (
-      <Container style={{ backgroundColor: "#9c27b0" }}>
+      <Container style={{ backgroundColor: '#9c27b0' }}>
         <Content padder>
           <Image
-            source={require("../../../assets/img/Logo2.png")}
+            source={require('../../../assets/img/Logo2.png')}
             style={{
               height: 200,
               width: 200,
-              alignSelf: "center",
+              alignSelf: 'center',
               marginTop: 15
             }}
           />
           <Form>
             <Item floatingLabel>
-              <Label style={{ color: "rgba(255,255,255,0.6)" }}>Email</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Email</Label>
               <Input
                 keyboardType="email-address"
                 returnKeyType="next"
@@ -90,7 +85,7 @@ class LoginForm extends Component {
               />
             </Item>
             <Item floatingLabel last>
-              <Label style={{ color: "rgba(255,255,255,0.6)" }}>Senha</Label>
+              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Senha</Label>
               <Input
                 secureTextEntry
                 onChangeText={this.onPasswordChange.bind(this)}
@@ -107,7 +102,7 @@ class LoginForm extends Component {
               }}
             >
               <Icon name="people" />
-              <Text style={{ color: "rgba(255,255,255,0.8)" }}>Login</Text>
+              <Text style={{ color: 'rgba(255,255,255,0.8)' }}>Login</Text>
             </Button>
             <Button
               style={{ marginTop: 20, marginRight: 30, marginLeft: 30 }}
@@ -117,9 +112,7 @@ class LoginForm extends Component {
               onPress={() => Actions.register()}
             >
               <Icon name="add-circle" />
-              <Text
-                style={{ color: "rgba(255,255,255,0.8)", alignSelf: "center" }}
-              >
+              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
                 Cadastrar-se
               </Text>
             </Button>
