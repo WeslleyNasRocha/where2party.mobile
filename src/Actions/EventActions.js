@@ -83,11 +83,10 @@ export const eventCreated = ({
     window.Blob = polyfill.Blob;
 
     const rnfbURI = RNFetchBlob.wrap(path);
-
+    // FIXME: mudar funçao de deixar a imagem unica
     const image = `${Date.now}${user}.png`;
 
     Blob.build(rnfbURI, { type: 'image/png;' }).then(blob => {
-      // upload image using Firebase SDK
       Firebase.storage()
         .ref('eventImages')
         .child(image)
@@ -96,12 +95,12 @@ export const eventCreated = ({
           Firebase.database()
             .ref('eventos')
             .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user, image })
-            .then(
+            .then(() => {
               dispatch({
                 type: EVENT_CREATED
-              })
-              Actions.pop()
-            )
+              });
+              Actions.pop();
+            })
             .catch(error => console.log(error));
           blob.close();
         })
