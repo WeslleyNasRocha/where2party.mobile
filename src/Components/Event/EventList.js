@@ -46,17 +46,19 @@ class EventList extends Component {
   render() {
     //console.log(this.props);
     return (
-      <ListView
-        enableEmptySections
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh.bind(this)}
-          />
-        }
-      />
+      <View contentContainerStyle={{ flex: 1 }}>
+        <ListView
+          enableEmptySections
+          dataSource={this.dataSource}
+          renderRow={this.renderRow}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+          }
+        />
+      </View>
     );
   }
 }

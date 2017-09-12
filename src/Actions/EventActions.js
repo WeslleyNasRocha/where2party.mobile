@@ -83,14 +83,30 @@ export const eventCreated = ({
     window.Blob = polyfill.Blob;
 
     const rnfbURI = RNFetchBlob.wrap(path);
-    // FIXME: mudar funçao de deixar a imagem unica
-    const image = `${Date.now}${user}.png`;
+    let image = `${user}++${Date.now().toString()}`;
 
-    Blob.build(rnfbURI, { type: 'image/png;' }).then(blob => {
+    switch (ImageMime) {
+      case 'image/png':
+        image += '.png';
+        break;
+      case 'image/jpeg':
+        image += '.jpeg';
+        break;
+      case 'image/jpg':
+        image += '.jpg';
+        break;
+      default:
+        console.log(`Error: Image type: ${ImageMime}`);
+        return { type: null };
+    }
+
+    console.log(image);
+
+    Blob.build(rnfbURI, { type: `${ImageMime}` }).then(blob => {
       Firebase.storage()
         .ref('eventImages')
-        .child(image)
-        .put(blob, { contentType: 'image/png' })
+        .child(`${image}`)
+        .put(blob, { contentType: `${ImageMime}` })
         .then(() => {
           Firebase.database()
             .ref('eventos')

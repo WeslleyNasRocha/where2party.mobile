@@ -13,8 +13,8 @@ class Event extends Component {
   componentWillMount = () => {
     const ref = firebase
       .storage()
-      .ref()
-      .child(`/eventImages/${this.props.eventItem.image}`)
+      .ref('eventImages')
+      .child(`${this.props.eventItem.image}`)
       .getDownloadURL()
       .then(url => {
         console.log(url);
@@ -23,13 +23,14 @@ class Event extends Component {
             uri: `${url}`
           }
         });
-      });
+      })
+      .catch(error => console.log(error));
     console.log(this.state);
   };
 
   render() {
     const { Titulo } = this.props.eventItem;
-    //console.log(image);
+    // FIXME: Refresh not working
     return (
       <Card>
         <CardItem>

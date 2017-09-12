@@ -8,6 +8,7 @@ export const eventsFetch = () => {
       .ref('/eventos')
       .once('value', snapshot => {
         dispatch({ type: FEED_EVENTS_FETCH_SUCCESS, payload: snapshot.val() });
-      });
+      })
+      .catch(error => console.log(error));
   };
 };
