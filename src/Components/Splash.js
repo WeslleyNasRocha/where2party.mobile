@@ -17,7 +17,10 @@ class Splash extends Component {
 
   render() {
     return (
-      <Image source={require('../../assets/img/splashscreen.png')} style={styles.BackSplash}>
+      <Image
+        source={require('../../assets/img/splashscreen.png')}
+        style={styles.BackSplash}
+      >
         <Spinner visible />
       </Image>
     );

@@ -9,7 +9,7 @@ import {
 } from "./Types";
 
 export const loadImages = imgUrl => {
-  console.log(imgUrl);
+  //console.log(imgUrl);
   return dispatch => {
     firebase
       .storage()
@@ -17,7 +17,7 @@ export const loadImages = imgUrl => {
       .child(`${imgUrl}`)
       .getDownloadURL()
       .then(url => {
-        console.log(`url da imagem: ${url}`);
+        //console.log(`url da imagem: ${url}`);
         dispatch({ type: EVENT_SCREEN_LOAD_IMAGE, payload: { uri: url } });
       })
       .catch(error => console.log(error));
@@ -37,7 +37,7 @@ export const getMap = eventLocale => {
       // console.log(position.coords);
 
       origin = `${position.coords.latitude},${position.coords.longitude}`;
-      console.log(origin);
+      //console.log(origin);
       //   this.setState({
       //     initialRouteCoords: {
       //       latitude: position.coords.latitude,
@@ -90,15 +90,15 @@ export const getMap = eventLocale => {
 const decodeRoute = (t, e) => {
   for (
     var n,
-      o,
-      u = 0,
-      l = 0,
-      r = 0,
-      d = [],
-      h = 0,
-      i = 0,
-      a = null,
-      c = Math.pow(10, e || 5);
+    o,
+    u = 0,
+    l = 0,
+    r = 0,
+    d = [],
+    h = 0,
+    i = 0,
+    a = null,
+    c = Math.pow(10, e || 5);
     u < t.length;
 
   ) {
@@ -113,7 +113,7 @@ const decodeRoute = (t, e) => {
       (r += o),
       d.push([l / c, r / c]);
   }
-  return (d = d.map(function(t) {
+  return (d = d.map(function (t) {
     return { latitude: t[0], longitude: t[1] };
   }));
 };
@@ -121,3 +121,7 @@ const decodeRoute = (t, e) => {
 export const backToFeed = () => {
   return { type: CLEAN_STATE };
 };
+
+export const subscribeParty = () => {
+
+}

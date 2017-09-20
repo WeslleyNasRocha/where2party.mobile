@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Actions } from "react-native-router-flux";
-import { Image, Text, TouchableWithoutFeedback } from "react-native";
-import { Card, CardItem, Right, Icon } from "native-base";
+import { View, Image, Text, TouchableWithoutFeedback } from "react-native";
+import { Card, CardItem, Right, Icon, Body } from "native-base";
 import firebase from "firebase";
 
 class Event extends Component {
@@ -48,15 +48,19 @@ class Event extends Component {
           <CardItem>
             <Image style={style.imageBanner} source={this.state.imgUrl} />
           </CardItem>
-          <CardItem>
-            <Text>{Titulo}</Text>
-          </CardItem>
-          <CardItem>
-            <Text>{Descricao}</Text>
-            <Right>
-              <Icon name="pin" onPress={() => this.goToMap(Local)} />
-            </Right>
-          </CardItem>
+          <View>
+            <CardItem style={{ alignSelf: "center" }} >
+              <Text style={{ fontSize: 30 }} numberOfLines={1} >{Titulo}</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text numberOfLines={2} > {Descricao}</Text>
+              </Body>
+              <Right>
+                <Icon name="pin" onPress={() => this.goToMap(Local)} />
+              </Right>
+            </CardItem>
+          </View>
         </Card>
       </TouchableWithoutFeedback>
     );

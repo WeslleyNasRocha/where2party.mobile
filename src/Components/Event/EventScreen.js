@@ -20,11 +20,17 @@ import {
   CardItem
 } from "native-base";
 import MapTools from "./Components/MapTools";
+import ImageBanner from "./Components/ImageBanner";
 import { loadImages, getMap, backToFeed } from "../../Actions";
 import { eventScreen } from "../../Reducers";
 
 class EventScreen extends Component {
-  // Todo: throw to actions
+  constructor(props) {
+    super(props);
+    this.state = {
+      chatIcon: "beer"
+    }
+  }
 
   componentWillMount = () => {
     this.props.loadImages(this.props.image);
@@ -33,24 +39,36 @@ class EventScreen extends Component {
   };
 
   componentDidMount = () => {
-    const timeout = 4000;
+    let timeout = 4000;
     let animationTimeout;
 
     animationTimeout = setTimeout(() => {
       this.focusMap(["inicio", "final"], true);
-    }, timeout);
+    }, 4000);
   };
 
+  componentDidUpdate() {
+
+  }
+
   focusMap(markers, animated) {
-    console.log(`Markers received to populate map: ${markers}`);
+    //console.log(`Markers received to populate map: ${markers}`);
     this.map.fitToSuppliedMarkers(markers, animated);
   }
 
   renderMarkers(id, coords) {
-    console.log(coords);
+    //console.log(coords);
     if (coords !== {} && coords !== null && coords !== undefined) {
       return <MapView.Marker identifier={id} coordinate={coords} />;
     }
+  }
+
+  subscribeButtonPress() {
+    console.log("boora porra")
+    this.setState({ chatIcon: "ios-chatbubbles" })
+    animationTimeout = setTimeout(() => {
+      this.focusMap(["inicio", "final"], true);
+    }, 4000);
   }
 
   render() {
@@ -61,6 +79,7 @@ class EventScreen extends Component {
           <Left>
             <Button
               transparent
+              rounded
               onPress={() => {
                 Actions.pop();
                 this.props.backToFeed();
@@ -75,23 +94,34 @@ class EventScreen extends Component {
             </Title>
           </Body>
           <Right>
-            {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
-            <Icon name="ios-chatbubbles" style={{ color: "white" }} />
+            <Button
+              transparent
+              rounded
+            >
+              {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
+              <Icon name={this.state.chatIcon} style={{ color: "white" }} />
+            </Button>
           </Right>
         </Header>
 
         <Container style={style.containerStyle}>
           <Content style={{ backgroundColor: "#9c27b0" }}>
-            <Card style={style.cardStyle}>
+            <Card>
               <CardItem cardBody>
-                <Image style={style.imageBanner} source={this.props.imgUrl} />
+                <View style={{ flex: 1, height: 300 }}>
+                  <Image source={this.props.imgUrl} style={{ flex: 1, alignSelf: "stretch" }} />
+                </View>
+                {/* <ImageBanner imgSource={this.props.imgUrl} /> */}
               </CardItem>
               <CardItem>
-                <Text>{this.props.Titulo}</Text>
+                <View style={{ flex: 1, alignItems: "center" }} >
+                  <Text style={{ fontSize: 30 }} >{this.props.Titulo}</Text>
+                </View>
               </CardItem>
               <CardItem>
                 <Text>{this.props.Descricao}</Text>
               </CardItem>
+
               <CardItem>
                 <Body>
                   <MapView
@@ -124,6 +154,17 @@ class EventScreen extends Component {
                   />
                 </Body>
               </CardItem>
+              <CardItem>
+                <View style={{ flex: 1 }} >
+                  <Button
+                    style={{ justifyContent: "center", alignSelf: "stretch" }}
+                    onPress={() => this.subscribeButtonPress()}
+                  >
+                    <Icon name="beer" />
+                    <Text style={{ color: "#fff", fontSize: 20 }} >Bora !!!</Text>
+                  </Button>
+                </View>
+              </CardItem>
             </Card>
           </Content>
         </Container>
@@ -135,15 +176,9 @@ class EventScreen extends Component {
 const style = StyleSheet.create({
   map: {
     height: 200,
-    alignSelf: "stretch"
-  },
-  imageBanner: {
-    padding: 0,
-    margin: 0,
-    height: 200,
-    width: 300,
-    flex: 1,
-    alignSelf: "center"
+    width: 385,
+    alignSelf: "stretch",
+    flex: 1
   },
   containerStyle: {
     paddingTop: 0,
