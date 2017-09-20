@@ -82,15 +82,20 @@ class EventScreen extends Component {
 
         <Container style={style.containerStyle}>
           <Content style={{ backgroundColor: "#9c27b0" }}>
-            <Card style={style.cardStyle}>
+            <Card>
               <CardItem cardBody>
                 <Image style={style.imageBanner} source={this.props.imgUrl} />
               </CardItem>
               <CardItem>
-                <Text>{this.props.Titulo}</Text>
+                <Text style={{ fontSize: 30, alignSelf: "center" }} >{this.props.Titulo}</Text>
               </CardItem>
               <CardItem>
                 <Text>{this.props.Descricao}</Text>
+              </CardItem>
+              <CardItem>
+                <Button style={{ width: 200 }}>
+                  <Text>Bora</Text>
+                </Button>
               </CardItem>
               <CardItem>
                 <Body>
@@ -135,7 +140,9 @@ class EventScreen extends Component {
 const style = StyleSheet.create({
   map: {
     height: 200,
-    alignSelf: "stretch"
+    width: 385,
+    alignSelf: "stretch",
+    flex: 1
   },
   imageBanner: {
     padding: 0,
