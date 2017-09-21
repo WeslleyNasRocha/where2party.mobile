@@ -4,7 +4,8 @@ import {
   EVENT_SCREEN_GET_EVENT_POSITION,
   EVENT_SCREEN_GET_ROUTE,
   EVENT_SCREEN_GET_ROUTE_DATA,
-  CLEAN_STATE
+  CLEAN_STATE,
+  CHANGE_USER_SUBSCRIPTION
 } from "../Actions/Types";
 
 const EventScreenInitialState = {
@@ -17,7 +18,8 @@ const EventScreenInitialState = {
     longitudeDelta: 0
   },
   route: {},
-  routeData: {}
+  routeData: {},
+  sub: {}
 };
 
 export default (state = EventScreenInitialState, action) => {
@@ -46,6 +48,11 @@ export default (state = EventScreenInitialState, action) => {
       return {
         ...state,
         routeData: action.payload
+      };
+    case CHANGE_USER_SUBSCRIPTION:
+      return {
+        ...state,
+        sub: action.payload
       };
     case CLEAN_STATE:
       return { ...EventScreenInitialState };

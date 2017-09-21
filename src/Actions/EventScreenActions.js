@@ -5,7 +5,8 @@ import {
   EVENT_SCREEN_GET_EVENT_POSITION,
   EVENT_SCREEN_GET_ROUTE,
   EVENT_SCREEN_GET_ROUTE_DATA,
-  CLEAN_STATE
+  CLEAN_STATE,
+  CHANGE_USER_SUBSCRIPTION
 } from "./Types";
 
 export const loadImages = imgUrl => {
@@ -90,15 +91,15 @@ export const getMap = eventLocale => {
 const decodeRoute = (t, e) => {
   for (
     var n,
-    o,
-    u = 0,
-    l = 0,
-    r = 0,
-    d = [],
-    h = 0,
-    i = 0,
-    a = null,
-    c = Math.pow(10, e || 5);
+      o,
+      u = 0,
+      l = 0,
+      r = 0,
+      d = [],
+      h = 0,
+      i = 0,
+      a = null,
+      c = Math.pow(10, e || 5);
     u < t.length;
 
   ) {
@@ -113,7 +114,7 @@ const decodeRoute = (t, e) => {
       (r += o),
       d.push([l / c, r / c]);
   }
-  return (d = d.map(function (t) {
+  return (d = d.map(function(t) {
     return { latitude: t[0], longitude: t[1] };
   }));
 };
@@ -122,6 +123,44 @@ export const backToFeed = () => {
   return { type: CLEAN_STATE };
 };
 
-export const subscribeParty = () => {
+export const changeSubscription = (partyId, value) => {
+  var userId = firebase.auth().currentUser.uid;
+  return dispatch => {
+    firebase
+      .app()
+      .database()
+      .ref("subs/" + partyId)
+      .child("users")
+      .update({ [userId]: value })
+      .then(dispatch({ type: CHANGE_USER_SUBSCRIPTION, payload: value }))
+      .catch(error => console.log(error));
+  };
+};
 
-}
+export const getSubscription = partyId => {
+  var userId = firebase.auth().currentUser.uid;
+  return dispatch => {
+    firebase
+      .app()
+      .database()
+      .ref("subs/" + partyId)
+      .child("users")
+      .once("value")
+      .then(snapshot => {
+        var response = false;
+        if (snapshot.val() != null) {
+          var snap = snapshot.val();
+          console.log(snap);
+          _.each(snap, (val, key) => {
+            console.log(key);
+            console.log(val);
+            if (userId === key && val) {
+              console.log("inscrito");
+            }
+          });
+        }
+        //dispatch({ type: BOOT_SUBS, payload: response });
+      })
+      .catch(error => console.log(error));
+  };
+};

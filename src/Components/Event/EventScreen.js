@@ -20,8 +20,14 @@ import {
   CardItem
 } from "native-base";
 import MapTools from "./Components/MapTools";
-import ImageBanner from "./Components/ImageBanner";
-import { loadImages, getMap, backToFeed } from "../../Actions";
+import Subs from "./Components/Subs";
+import {
+  loadImages,
+  getMap,
+  backToFeed,
+  changeSubscription,
+  getSubscription
+} from "../../Actions";
 import { eventScreen } from "../../Reducers";
 
 class EventScreen extends Component {
@@ -29,13 +35,14 @@ class EventScreen extends Component {
     super(props);
     this.state = {
       chatIcon: "beer"
-    }
+    };
   }
 
   componentWillMount = () => {
     this.props.loadImages(this.props.image);
     this.props.getMap(this.props.Local);
-    // console.log(this.props);
+    this.props.getSubscription(this.props.uid);
+    console.log(this.props);
   };
 
   componentDidMount = () => {
@@ -46,10 +53,6 @@ class EventScreen extends Component {
       this.focusMap(["inicio", "final"], true);
     }, 4000);
   };
-
-  componentDidUpdate() {
-
-  }
 
   focusMap(markers, animated) {
     //console.log(`Markers received to populate map: ${markers}`);
@@ -64,8 +67,11 @@ class EventScreen extends Component {
   }
 
   subscribeButtonPress() {
-    console.log("boora porra")
-    this.setState({ chatIcon: "ios-chatbubbles" })
+    console.log("boora porra");
+    this.setState({ chatIcon: "ios-chatbubbles" });
+
+    this.props.changeSubscription(this.props.uid, !this.props.sub);
+
     animationTimeout = setTimeout(() => {
       this.focusMap(["inicio", "final"], true);
     }, 4000);
@@ -94,10 +100,7 @@ class EventScreen extends Component {
             </Title>
           </Body>
           <Right>
-            <Button
-              transparent
-              rounded
-            >
+            <Button transparent rounded>
               {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
               <Icon name={this.state.chatIcon} style={{ color: "white" }} />
             </Button>
@@ -109,19 +112,21 @@ class EventScreen extends Component {
             <Card>
               <CardItem cardBody>
                 <View style={{ flex: 1, height: 300 }}>
-                  <Image source={this.props.imgUrl} style={{ flex: 1, alignSelf: "stretch" }} />
+                  <Image
+                    source={this.props.imgUrl}
+                    style={{ flex: 1, alignSelf: "stretch" }}
+                  />
                 </View>
                 {/* <ImageBanner imgSource={this.props.imgUrl} /> */}
               </CardItem>
               <CardItem>
-                <View style={{ flex: 1, alignItems: "center" }} >
-                  <Text style={{ fontSize: 30 }} >{this.props.Titulo}</Text>
+                <View style={{ flex: 1, alignItems: "center" }}>
+                  <Text style={{ fontSize: 30 }}>{this.props.Titulo}</Text>
                 </View>
               </CardItem>
               <CardItem>
                 <Text>{this.props.Descricao}</Text>
               </CardItem>
-
               <CardItem>
                 <Body>
                   <MapView
@@ -155,15 +160,20 @@ class EventScreen extends Component {
                 </Body>
               </CardItem>
               <CardItem>
-                <View style={{ flex: 1 }} >
+                <View style={{ flex: 1 }}>
                   <Button
                     style={{ justifyContent: "center", alignSelf: "stretch" }}
                     onPress={() => this.subscribeButtonPress()}
                   >
                     <Icon name="beer" />
-                    <Text style={{ color: "#fff", fontSize: 20 }} >Bora !!!</Text>
+                    <Text style={{ color: "#fff", fontSize: 20 }}>
+                      Bora !!!
+                    </Text>
                   </Button>
                 </View>
+              </CardItem>
+              <CardItem>
+                <Subs eventId={this.props.uid} />
               </CardItem>
             </Card>
           </Content>
@@ -194,17 +204,23 @@ const mapStateToProps = ({ eventScreen }) => {
     currentPosition,
     eventPosition,
     route,
-    routeData
+    routeData,
+    sub
   } = eventScreen;
   return {
     imgUrl,
     currentPosition,
     eventPosition,
     route,
-    routeData
+    routeData,
+    sub
   };
 };
 
-export default connect(mapStateToProps, { loadImages, getMap, backToFeed })(
-  EventScreen
-);
+export default connect(mapStateToProps, {
+  loadImages,
+  getMap,
+  backToFeed,
+  changeSubscription,
+  getSubscription
+})(EventScreen);
