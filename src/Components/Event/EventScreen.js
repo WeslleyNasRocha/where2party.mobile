@@ -123,6 +123,11 @@ class EventScreen extends Component {
               </CardItem>
 
               <CardItem>
+                <Button style={{ width: 200 }}>
+                  <Text>Bora</Text>
+                </Button>
+              </CardItem>
+              <CardItem>
                 <Body>
                   <MapView
                     style={style.map}
