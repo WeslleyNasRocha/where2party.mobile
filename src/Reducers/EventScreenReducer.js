@@ -5,7 +5,8 @@ import {
   EVENT_SCREEN_GET_ROUTE,
   EVENT_SCREEN_GET_ROUTE_DATA,
   CLEAN_STATE,
-  CHANGE_USER_SUBSCRIPTION
+  CHANGE_USER_SUBSCRIPTION,
+  SET_SUB
 } from "../Actions/Types";
 
 const EventScreenInitialState = {
@@ -50,6 +51,11 @@ export default (state = EventScreenInitialState, action) => {
         routeData: action.payload
       };
     case CHANGE_USER_SUBSCRIPTION:
+      return {
+        ...state,
+        sub: action.payload
+      };
+    case SET_SUB:
       return {
         ...state,
         sub: action.payload

@@ -6,7 +6,8 @@ import {
   EVENT_SCREEN_GET_ROUTE,
   EVENT_SCREEN_GET_ROUTE_DATA,
   CLEAN_STATE,
-  CHANGE_USER_SUBSCRIPTION
+  CHANGE_USER_SUBSCRIPTION,
+  SET_SUB
 } from "./Types";
 
 export const loadImages = imgUrl => {
@@ -147,19 +148,19 @@ export const getSubscription = partyId => {
       .child("users")
       .once("value")
       .then(snapshot => {
-        var response = false;
+        let response = false;
         if (snapshot.val() != null) {
-          var snap = snapshot.val();
-          console.log(snap);
+          const snap = snapshot.val();
+          //console.log(snap);
           _.each(snap, (val, key) => {
-            console.log(key);
-            console.log(val);
-            if (userId === key && val) {
-              console.log("inscrito");
+            //console.log(key);
+            //console.log(val);
+            if (userId === key) {
+              response = val;
             }
           });
         }
-        //dispatch({ type: BOOT_SUBS, payload: response });
+        dispatch({ type: SET_SUB, payload: response });
       })
       .catch(error => console.log(error));
   };

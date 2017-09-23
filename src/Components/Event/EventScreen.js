@@ -67,14 +67,49 @@ class EventScreen extends Component {
   }
 
   subscribeButtonPress() {
-    console.log("boora porra");
-    this.setState({ chatIcon: "ios-chatbubbles" });
-
     this.props.changeSubscription(this.props.uid, !this.props.sub);
+  }
 
-    animationTimeout = setTimeout(() => {
-      this.focusMap(["inicio", "final"], true);
-    }, 4000);
+  renderChatIcon(sub) {
+    if (sub) {
+      return (
+        <Button transparent rounded>
+          {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
+          <Icon name="ios-chatbubbles" style={{ color: "white" }} />
+        </Button>
+      );
+    } else {
+      return (
+        <Button transparent rounded>
+          {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
+          <Icon name="beer" style={{ color: "white" }} />
+        </Button>
+      );
+    }
+  }
+
+  renderButton(sub) {
+    if (!sub) {
+      return (
+        <Button
+          style={{ justifyContent: "center", alignSelf: "stretch" }}
+          onPress={() => this.subscribeButtonPress()}
+        >
+          <Icon name="beer" />
+          <Text style={{ color: "#fff", fontSize: 20 }}>Bora !!!</Text>
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          style={{ justifyContent: "center", alignSelf: "stretch" }}
+          onPress={() => this.subscribeButtonPress()}
+        >
+          <Text style={{ color: "#fff", fontSize: 20 }}>Cancelar</Text>
+          <Icon name="md-close" />
+        </Button>
+      );
+    }
   }
 
   render() {
@@ -99,12 +134,7 @@ class EventScreen extends Component {
               {this.props.Titulo}
             </Title>
           </Body>
-          <Right>
-            <Button transparent rounded>
-              {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
-              <Icon name={this.state.chatIcon} style={{ color: "white" }} />
-            </Button>
-          </Right>
+          <Right>{this.renderChatIcon(this.props.sub)}</Right>
         </Header>
 
         <Container style={style.containerStyle}>
@@ -123,6 +153,24 @@ class EventScreen extends Component {
                 <View style={{ flex: 1, alignItems: "center" }}>
                   <Text style={{ fontSize: 30 }}>{this.props.Titulo}</Text>
                 </View>
+              </CardItem>
+              <CardItem>
+                <Right>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "flex-end",
+                      alignContent: "flex-end",
+                      marginRight: -70
+                    }}
+                  >
+                    <Text style={{ paddingRight: 10, fontSize: 20 }}>
+                      {this.props.Data}
+                    </Text>
+                    <Icon name="md-calendar" style={{ color: "#ccc" }} />
+                  </View>
+                </Right>
               </CardItem>
               <CardItem>
                 <Text>{this.props.Descricao}</Text>
@@ -161,15 +209,7 @@ class EventScreen extends Component {
               </CardItem>
               <CardItem>
                 <View style={{ flex: 1 }}>
-                  <Button
-                    style={{ justifyContent: "center", alignSelf: "stretch" }}
-                    onPress={() => this.subscribeButtonPress()}
-                  >
-                    <Icon name="beer" />
-                    <Text style={{ color: "#fff", fontSize: 20 }}>
-                      Bora !!!
-                    </Text>
-                  </Button>
+                  {this.renderButton(this.props.sub)}
                 </View>
               </CardItem>
               <CardItem>
