@@ -42,7 +42,7 @@ class EventScreen extends Component {
     this.props.loadImages(this.props.image);
     this.props.getMap(this.props.Local);
     this.props.getSubscription(this.props.uid);
-    console.log(this.props);
+    // console.log(this.props);
   };
 
   componentDidMount = () => {

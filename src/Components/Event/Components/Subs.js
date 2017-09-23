@@ -6,7 +6,7 @@ import firebase from "firebase";
 
 class Subs extends Component {
   componentWillMount = () => {
-    console.log(this.props);
+    // console.log(this.props);
 
     firebase
       .app()
