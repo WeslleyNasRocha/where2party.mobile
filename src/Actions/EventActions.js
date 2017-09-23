@@ -1,7 +1,7 @@
-import { Actions } from 'react-native-router-flux';
-import Geocoder from 'react-native-geocoding';
-import Firebase from 'firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
+import { Actions } from "react-native-router-flux";
+import Geocoder from "react-native-geocoding";
+import Firebase from "firebase";
+import RNFetchBlob from "react-native-fetch-blob";
 import {
   EVENT_CREATED,
   EVENT_CREATE_ATTEMPT,
@@ -12,8 +12,9 @@ import {
   DATE_TIME_CONFIRMED,
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_CHANGE,
-  EVENT_IMAGE_OVERSIZE
-} from './Types';
+  EVENT_IMAGE_OVERSIZE,
+  EVENT_SCREEN_LOAD_IMAGE
+} from "./Types";
 
 export const formValueChanged = ({ prop, value }) => {
   return {
@@ -22,14 +23,19 @@ export const formValueChanged = ({ prop, value }) => {
   };
 };
 
-export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+export const saveGpsLocation = ({
+  latitude,
+  longitude,
+  latitudeDelta,
+  longitudeDelta
+}) => {
   console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
   return dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
       payload: { latitude, longitude, latitudeDelta, longitudeDelta }
     });
-    Geocoder.setApiKey('AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI'); // use a valid API key
+    Geocoder.setApiKey("AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI"); // use a valid API key
 
     console.log(Geocoder);
     Geocoder.getFromLatLng(latitude, longitude).then(
@@ -70,7 +76,7 @@ export const eventCreated = ({
     ImageData,
     ImageMime
   });
-  const path = ImagePath.replace('file://', '');
+  const path = ImagePath.replace("file://", "");
   const user = Firebase.auth().currentUser.uid;
   return dispatch => {
     dispatch({
@@ -86,14 +92,14 @@ export const eventCreated = ({
     let image = `${user}++${Date.now().toString()}`;
 
     switch (ImageMime) {
-      case 'image/png':
-        image += '.png';
+      case "image/png":
+        image += ".png";
         break;
-      case 'image/jpeg':
-        image += '.jpeg';
+      case "image/jpeg":
+        image += ".jpeg";
         break;
-      case 'image/jpg':
-        image += '.jpg';
+      case "image/jpg":
+        image += ".jpg";
         break;
       default:
         console.log(`Error: Image type: ${ImageMime}`);
@@ -104,13 +110,22 @@ export const eventCreated = ({
 
     Blob.build(rnfbURI, { type: `${ImageMime}` }).then(blob => {
       Firebase.storage()
-        .ref('eventImages')
+        .ref("eventImages")
         .child(`${image}`)
         .put(blob, { contentType: `${ImageMime}` })
         .then(() => {
           Firebase.database()
-            .ref('eventos')
-            .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user, image })
+            .ref("eventos")
+            .push({
+              Titulo,
+              Address,
+              Descricao,
+              Tags,
+              Local,
+              Data,
+              orgId: user,
+              image
+            })
             .then(() => {
               dispatch({
                 type: EVENT_CREATED
@@ -137,7 +152,7 @@ export const dateTimeConfirm = date => {
 
   return {
     type: DATE_TIME_CONFIRMED,
-    payload: data.toLocaleDateString('pt-BR')
+    payload: data.toLocaleDateString("pt-BR")
   };
 };
 

@@ -10,6 +10,8 @@ import feedPrincipal from "./Components/Feed/Feed.js";
 
 import Configuracao from "./Components/Configure/Configuracao";
 
+import EventScreen from "./Components/Event/EventScreen";
+
 const Routers = () => {
   return (
     <Router hideNavBar={true}>
@@ -25,6 +27,7 @@ const Routers = () => {
           <Scene key="map" component={Maps} hideNavBar />
           <Scene key="feedPrincipal" component={feedPrincipal} hideNavBar />
         </Scene>
+        <Scene key="EventScreen" component={EventScreen} hideNavBar />
         <Scene key="configuracao" component={Configuracao} hideNavBar />
       </Scene>
     </Router>
