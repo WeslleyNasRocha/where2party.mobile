@@ -26,22 +26,17 @@ import {
   getMap,
   backToFeed,
   changeSubscription,
-  getSubscription
+  getSubscription,
+  getOwner
 } from "../../Actions";
 import { eventScreen } from "../../Reducers";
 
 class EventScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chatIcon: "beer"
-    };
-  }
-
   componentWillMount = () => {
     this.props.loadImages(this.props.image);
     this.props.getMap(this.props.Local);
     this.props.getSubscription(this.props.uid);
+    this.props.getOwner(this.props.orgId);
     // console.log(this.props);
   };
 
@@ -68,6 +63,11 @@ class EventScreen extends Component {
 
   subscribeButtonPress() {
     this.props.changeSubscription(this.props.uid, !this.props.sub);
+  }
+
+  componentWillUnmount() {
+    console.log("umounting");
+    this.props.backToFeed();
   }
 
   renderChatIcon(sub) {
@@ -112,6 +112,53 @@ class EventScreen extends Component {
     }
   }
 
+  editEvent(eventId) {
+    // console.log(this.props);
+    const {
+      Address,
+      Data,
+      Descricao,
+      Local,
+      Titulo,
+      imgUrl,
+      orgId,
+      ui
+    } = this.props;
+    var eventProps = {
+      Address,
+      Data,
+      Descricao,
+      Local,
+      Titulo,
+      imgUrl,
+      orgId,
+      ui
+    };
+    console.log(eventProps);
+    Actions.EditEvent(eventProps);
+  }
+
+  renderEditButton() {
+    // console.log(this.props.owner);
+    if (this.props.owner) {
+      return (
+        <Button
+          style={{
+            marginTop: -50,
+            alignSelf: "flex-end",
+            backgroundColor: "rgba(0, 0, 0, 0.7)"
+          }}
+          onPress={() => {
+            this.editEvent(this.props.uid);
+          }}
+        >
+          <Icon name="md-create" style={{ color: "#fff" }} />
+          <Text style={{ color: "#fff" }}>Editar</Text>
+        </Button>
+      );
+    }
+  }
+
   render() {
     // console.log(this.state.initialRouteCoords);
     return (
@@ -123,7 +170,6 @@ class EventScreen extends Component {
               rounded
               onPress={() => {
                 Actions.pop();
-                this.props.backToFeed();
               }}
             >
               <Icon name="ios-arrow-back" />
@@ -147,8 +193,8 @@ class EventScreen extends Component {
                     style={{ flex: 1, alignSelf: "stretch" }}
                   />
                 </View>
-                {/* <ImageBanner imgSource={this.props.imgUrl} /> */}
               </CardItem>
+              {this.renderEditButton()}
               <CardItem>
                 <View style={{ flex: 1, alignItems: "center" }}>
                   <Text style={{ fontSize: 30 }}>{this.props.Titulo}</Text>
@@ -245,7 +291,8 @@ const mapStateToProps = ({ eventScreen }) => {
     eventPosition,
     route,
     routeData,
-    sub
+    sub,
+    owner
   } = eventScreen;
   return {
     imgUrl,
@@ -253,7 +300,8 @@ const mapStateToProps = ({ eventScreen }) => {
     eventPosition,
     route,
     routeData,
-    sub
+    sub,
+    owner
   };
 };
 
@@ -262,5 +310,6 @@ export default connect(mapStateToProps, {
   getMap,
   backToFeed,
   changeSubscription,
-  getSubscription
+  getSubscription,
+  getOwner
 })(EventScreen);
