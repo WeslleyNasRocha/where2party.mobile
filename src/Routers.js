@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Scene } from "react-native-router-flux";
+import { Router, Scene, ActionConst } from "react-native-router-flux";
 import LoginForm from "./Components/Auth/LoginForm";
 import RegisterForm from "./Components/Auth/RegisterForm";
 import MainFeed from "./Components/Feed/MainFeed";
@@ -17,11 +17,11 @@ const Routers = () => {
     <Router hideNavBar={true}>
       <Scene key="root" hideNavBar>
         <Scene key="splash" initial component={Splash} hideNavBar />
-        <Scene key="auth" hideNavBar>
+        <Scene key="auth" hideNavBar type={ActionConst.RESET}>
           <Scene key="login" component={LoginForm} initial hideNavBar={true} />
           <Scene key="register" component={RegisterForm} hideNavBar={true} />
         </Scene>
-        <Scene key="Feed">
+        <Scene key="Feed" type={ActionConst.RESET}>
           <Scene key="mainFeed" component={MainFeed} initial hideNavBar />
           <Scene key="createEvent" component={CreateEventForm} hideNavBar />
           <Scene key="map" component={Maps} hideNavBar />

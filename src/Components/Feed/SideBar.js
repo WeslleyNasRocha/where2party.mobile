@@ -9,11 +9,13 @@ import {
   Thumbnail
 } from "native-base";
 import { Image, AsyncStorage } from "react-native";
+import { connect } from "react-redux";
 import { Actions, ActionConst } from "react-native-router-flux";
+import { logout } from "../../Actions";
 
 class SideBar extends Component {
   logout() {
-    AsyncStorage.removeItem("user_data").then(Actions.auth(ActionConst.RESET));
+    this.props.logout();
   }
   render() {
     return (
@@ -106,4 +108,4 @@ class SideBar extends Component {
   }
 }
 
-export default SideBar;
+export default connect(null, { logout })(SideBar);

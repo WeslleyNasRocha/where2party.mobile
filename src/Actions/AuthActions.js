@@ -1,6 +1,6 @@
-import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
-import { AsyncStorage } from 'react-native';
+import firebase from "firebase";
+import { Actions, ActionConst } from "react-native-router-flux";
+import { AsyncStorage } from "react-native";
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -10,8 +10,9 @@ import {
   CREATION_USER_ATTEMPT,
   CREATION_USER_FAILED,
   LOGGED_USER,
-  BACK_FORM
-} from './Types';
+  BACK_FORM,
+  LOGOUT
+} from "./Types";
 
 export const emailChanged = text => {
   return {
@@ -76,7 +77,7 @@ export const backForm = () => {
 
 export const loggedUser = () => {
   return dispatch => {
-    AsyncStorage.getItem('user_data').then(user_data_json => {
+    AsyncStorage.getItem("user_data").then(user_data_json => {
       const user_data = JSON.parse(user_data_json);
       if (user_data != null) {
         dispatch({ type: LOGGED_USER });
@@ -98,7 +99,16 @@ const loginUserSuccess = (dispatch, user) => {
     payload: user
   });
 
-  AsyncStorage.setItem('user_data', JSON.stringify(user));
+  AsyncStorage.setItem("user_data", JSON.stringify(user));
 
-  Actions.Feed({ type: 'reset' });
+  Actions.Feed({ type: "reset" });
+};
+
+export const logout = () => {
+  return dispatch => {
+    AsyncStorage.removeItem("user_data").then(() => {
+      dispatch({ type: LOGOUT });
+      Actions.auth(ActionConst.RESET);
+    });
+  };
 };
