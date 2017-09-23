@@ -7,3 +7,4 @@ export const CREATION_USER_ATTEMPT = "creation_user_attempt";
 export const CREATION_USER_FAILED = "creation_user_failed";
 export const BACK_FORM = "back_form";
 export const LOGGED_USER = "logged_user";
+export const LOGOUT = "logout";

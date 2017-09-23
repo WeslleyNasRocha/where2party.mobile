@@ -7,14 +7,15 @@ import {
   CREATION_USER_ATTEMPT,
   CREATION_USER_FAILED,
   LOGGED_USER,
-  BACK_FORM
-} from '../Actions/Types';
+  BACK_FORM,
+  LOGOUT
+} from "../Actions/Types";
 
 const AuthInitialState = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   loading: false,
-  error: '',
+  error: "",
   user: null,
   logged: false
 };
@@ -24,26 +25,26 @@ export default (state = AuthInitialState, action) => {
       return {
         ...state,
         password: action.payload,
-        error: ''
+        error: ""
       };
     case EMAIL_CHANGED:
       return {
         ...state,
         email: action.payload,
-        error: ''
+        error: ""
       };
     case LOGIN_USER_ATTEMPT:
       return {
         ...state,
         loading: true,
-        error: ''
+        error: ""
       };
     case LOGIN_USER_FAIL:
       return {
         ...state,
-        password: '',
+        password: "",
         loading: false,
-        error: 'Usuario ou senha incorretos'
+        error: "Usuario ou senha incorretos"
       };
     case LOGIN_USER_SUCCESS:
       return {
@@ -55,7 +56,7 @@ export default (state = AuthInitialState, action) => {
       return {
         ...state,
         loading: true,
-        error: ''
+        error: ""
       };
     case CREATION_USER_FAILED:
       return {
@@ -74,7 +75,8 @@ export default (state = AuthInitialState, action) => {
         ...state,
         ...AuthInitialState
       };
-
+    case LOGOUT:
+      return { ...AuthInitialState };
     default:
       return state;
   }
