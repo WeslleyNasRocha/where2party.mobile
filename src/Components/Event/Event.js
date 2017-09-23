@@ -31,7 +31,7 @@ class Event extends Component {
 
   openEvent() {
     //console.log(this.props);
-    Actions.EventScreen({ ...this.props.eventItem, ...this.state.imgUrl });
+    Actions.EventHolder({ ...this.props.eventItem, ...this.state.imgUrl });
   }
 
   goToMap(local) {
@@ -49,12 +49,14 @@ class Event extends Component {
             <Image style={style.imageBanner} source={this.state.imgUrl} />
           </CardItem>
           <View>
-            <CardItem style={{ alignSelf: "center" }} >
-              <Text style={{ fontSize: 30 }} numberOfLines={1} >{Titulo}</Text>
+            <CardItem style={{ alignSelf: "center" }}>
+              <Text style={{ fontSize: 30 }} numberOfLines={1}>
+                {Titulo}
+              </Text>
             </CardItem>
             <CardItem>
               <Body>
-                <Text numberOfLines={2} > {Descricao}</Text>
+                <Text numberOfLines={2}> {Descricao}</Text>
               </Body>
               <Right>
                 <Icon name="pin" onPress={() => this.goToMap(Local)} />

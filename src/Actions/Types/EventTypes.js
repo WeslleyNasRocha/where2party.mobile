@@ -18,3 +18,4 @@ export const EVENT_SCREEN_GET_ROUTE_DATA = "event_screen_get_route_data";
 export const CLEAN_STATE = "clean_state";
 export const CHANGE_USER_SUBSCRIPTION = "change_user_subscription";
 export const SET_SUB = "set_sub";
+export const EVENT_OWNER = "event_owner";

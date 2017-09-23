@@ -7,7 +7,8 @@ import {
   EVENT_SCREEN_GET_ROUTE_DATA,
   CLEAN_STATE,
   CHANGE_USER_SUBSCRIPTION,
-  SET_SUB
+  SET_SUB,
+  EVENT_OWNER
 } from "./Types";
 
 export const loadImages = imgUrl => {
@@ -163,5 +164,14 @@ export const getSubscription = partyId => {
         dispatch({ type: SET_SUB, payload: response });
       })
       .catch(error => console.log(error));
+  };
+};
+
+export const getOwner = orgId => {
+  var userId = firebase.auth().currentUser.uid;
+  return dispatch => {
+    if (orgId === userId) {
+      dispatch({ type: EVENT_OWNER });
+    }
   };
 };

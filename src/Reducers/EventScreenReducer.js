@@ -6,7 +6,8 @@ import {
   EVENT_SCREEN_GET_ROUTE_DATA,
   CLEAN_STATE,
   CHANGE_USER_SUBSCRIPTION,
-  SET_SUB
+  SET_SUB,
+  EVENT_OWNER
 } from "../Actions/Types";
 
 const EventScreenInitialState = {
@@ -20,7 +21,8 @@ const EventScreenInitialState = {
   },
   route: {},
   routeData: {},
-  sub: {}
+  sub: {},
+  owner: false
 };
 
 export default (state = EventScreenInitialState, action) => {
@@ -60,6 +62,8 @@ export default (state = EventScreenInitialState, action) => {
         ...state,
         sub: action.payload
       };
+    case EVENT_OWNER:
+      return { ...state, owner: true };
     case CLEAN_STATE:
       return { ...EventScreenInitialState };
     default:
