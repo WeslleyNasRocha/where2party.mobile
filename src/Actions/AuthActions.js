@@ -101,7 +101,7 @@ const loginUserSuccess = (dispatch, user) => {
 
   AsyncStorage.setItem("user_data", JSON.stringify(user));
 
-  Actions.Feed({ type: "reset" });
+  Actions.Profile({ type: "reset" });
 };
 
 export const logout = () => {
