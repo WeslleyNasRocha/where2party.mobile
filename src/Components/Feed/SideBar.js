@@ -11,9 +11,11 @@ import {
 import { Image, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { Actions, ActionConst } from "react-native-router-flux";
-import { logout } from "../../Actions";
+import { profile } from "../../Reducers";
+import { logout, getProfile } from "../../Actions";
 
 class SideBar extends Component {
+
   logout() {
     this.props.logout();
   }
@@ -108,4 +110,9 @@ class SideBar extends Component {
   }
 }
 
-export default connect(null, { logout })(SideBar);
+mapStateToProps = ({ profile }) => {
+  const { UserName, LastName } = profile;
+  return { UserName, LastName };
+};
+
+export default connect(mapStateToProps, { logout, getProfile })(SideBar);

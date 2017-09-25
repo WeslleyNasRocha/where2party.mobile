@@ -46,8 +46,9 @@ class EventList extends Component {
   render() {
     //console.log(this.props);
     return (
-      <View contentContainerStyle={{ flex: 1 }}>
+      <View >
         <ListView
+          style={{ flex: 1, marginTop: 10 }}
           enableEmptySections
           dataSource={this.dataSource}
           renderRow={this.renderRow}

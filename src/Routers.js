@@ -13,6 +13,8 @@ import Configuracao from "./Components/Configure/Configuracao";
 import EventScreen from "./Components/Event/EventScreen";
 import EditEvent from "./Components/Event/EditEvent";
 
+import EditProfile from "./Components/Profile/ProfileEdit";
+
 const Routers = () => {
   return (
     <Router hideNavBar={true}>
@@ -31,6 +33,9 @@ const Routers = () => {
         <Scene key="EventHolder" hideNavBar>
           <Scene key="EventScreen" initial component={EventScreen} hideNavBar />
           <Scene key="EditEvent" component={EditEvent} hideNavBar />
+        </Scene>
+        <Scene key="Profile" hideNavBar>
+          <Scene key="ProfileEdit" hideNavBar component={EditProfile} />
         </Scene>
         <Scene key="configuracao" component={Configuracao} hideNavBar />
       </Scene>
