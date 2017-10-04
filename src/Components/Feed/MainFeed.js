@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { Drawer } from 'native-base';
-import Sidebar from './SideBar';
-import Feed from './Feed';
+import { Drawer } from "native-base";
+import Sidebar from "./SideBar";
+import Feed from "./Feed";
 
 export default class MainFeed extends Component {
   closeDrawer = () => {
@@ -11,6 +11,11 @@ export default class MainFeed extends Component {
   openDrawer = () => {
     this.drawer._root.open();
   };
+
+  componentDidMount() {
+    console.log("mount-feed");
+  }
+
   render() {
     return (
       <Drawer
