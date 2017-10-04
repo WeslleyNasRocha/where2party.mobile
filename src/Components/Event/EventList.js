@@ -1,12 +1,12 @@
-import _ from "lodash";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { View, ListView, FlatList, RefreshControl, Text } from "react-native";
-import { List, ListItem } from "native-base";
-import Event from "./Event";
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, ListView, FlatList, RefreshControl, Text } from 'react-native';
+import { List, ListItem } from 'native-base';
+import Event from './Event';
 
-import { eventsFetch } from "../../Actions";
-import { feed } from "../../Reducers";
+import { eventsFetch } from '../../Actions';
+import { feed } from '../../Reducers';
 
 class EventList extends Component {
   componentWillMount = () => {
@@ -16,7 +16,7 @@ class EventList extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props);
+    //console.log(this.props);
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -36,23 +36,11 @@ class EventList extends Component {
   //   this.dataSource = ds.cloneWithRows(events);
   // }
 
+  _keyExtractor = (item, index) => item.uid;
+
   renderItem({ item, index }) {
     return <Event eventItem={item} />;
   }
-
-  _keyExtractor = (item, index) => item.uid;
-
-  //   <ListView
-  //   enableEmptySections
-  //   dataSource={this.dataSource}
-  //   renderRow={this.renderRow}
-  //   refreshControl={
-  //     <RefreshControl
-  //       refreshing={this.state.refreshing}
-  //       onRefresh={this.onRefresh.bind(this)}
-  //     />
-  //   }
-  // />
 
   render() {
     //console.log(this.props);

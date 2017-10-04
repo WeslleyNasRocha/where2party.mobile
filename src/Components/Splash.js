@@ -1,26 +1,25 @@
-import React, { Component } from "react";
-import { View, Image, AsyncStorage } from "react-native";
-import { Actions } from "react-native-router-flux";
-import Spinner from "react-native-loading-spinner-overlay";
+import React, { Component } from 'react';
+import { Image, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Splash extends Component {
   componentDidMount() {
-    AsyncStorage.getItem("user_data").then(user_data_json => {
-      const user_data = JSON.parse(user_data_json);
-      if (user_data != null) {
-        Actions.Feed({ type: "replace" });
+    AsyncStorage.getItem('user_data').then(userDataJson => {
+      const userData = JSON.parse(userDataJson);
+      console.log(userData);
+      if (userData != null) {
+        const userId = userData.uid;
+        Actions.Feed({ type: 'replace', userId });
       } else {
-        Actions.auth({ type: "replace" });
+        Actions.auth({ type: 'replace' });
       }
     });
   }
 
   render() {
     return (
-      <Image
-        source={require("../../assets/img/splashscreen.png")}
-        style={styles.BackSplash}
-      >
+      <Image source={require('../../assets/img/splashscreen.png')} style={styles.BackSplash}>
         <Spinner visible />
       </Image>
     );
@@ -30,8 +29,8 @@ class Splash extends Component {
 const styles = {
   BackSplash: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     height: null,
     width: null
   }
