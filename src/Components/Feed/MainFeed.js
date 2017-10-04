@@ -11,6 +11,11 @@ export default class MainFeed extends Component {
   openDrawer = () => {
     this.drawer._root.open();
   };
+
+  componentDidMount() {
+    console.log("mount-feed");
+  }
+
   render() {
     return (
       <Drawer

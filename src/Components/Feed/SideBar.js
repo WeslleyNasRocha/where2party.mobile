@@ -15,9 +15,6 @@ import { profile } from "../../Reducers";
 import { logout, getProfile } from "../../Actions";
 
 class SideBar extends Component {
-  componentDidMount() {
-    this.props.getProfile();
-  }
   logout() {
     this.props.logout();
   }
