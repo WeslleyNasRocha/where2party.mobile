@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from 'firebase';
 import {
   EVENT_SCREEN_LOAD_IMAGE,
   EVENT_SCREEN_GET_CURRENT_POSITION,
@@ -9,14 +9,14 @@ import {
   CHANGE_USER_SUBSCRIPTION,
   SET_SUB,
   EVENT_OWNER
-} from "./Types";
+} from './Types';
 
-export const loadImages = imgUrl => {
+export const loadImages = imgUrl => 
   //console.log(imgUrl);
-  return dispatch => {
+   dispatch => {
     firebase
       .storage()
-      .ref("eventImages")
+      .ref('eventImages')
       .child(`${imgUrl}`)
       .getDownloadURL()
       .then(url => {
@@ -25,15 +25,14 @@ export const loadImages = imgUrl => {
       })
       .catch(error => console.log(error));
   };
-};
 
 export const getMap = eventLocale => {
   const { latitude, longitude } = eventLocale;
   // console.log(eventLocale);
-  const mode = "driving"; // 'walking';
-  let origin = "";
+  const mode = 'driving'; // 'walking';
+  let origin = '';
   const destination = `${latitude},${longitude}`;
-  const APIKEY = "AIzaSyAvHbGWeOk-xrUhqyxQkWUMqHvrPOJcNDI";
+  const APIKEY = 'AIzaSyAvHbGWeOk-xrUhqyxQkWUMqHvrPOJcNDI';
 
   return dispatch => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -69,9 +68,7 @@ export const getMap = eventLocale => {
           if (responseJson.routes.length) {
             dispatch({
               type: EVENT_SCREEN_GET_ROUTE,
-              payload: decodeRoute(
-                responseJson.routes[0].overview_polyline.points
-              )
+              payload: decodeRoute(responseJson.routes[0].overview_polyline.points)
             });
             dispatch({
               type: EVENT_SCREEN_GET_ROUTE_DATA,
@@ -92,16 +89,7 @@ export const getMap = eventLocale => {
 
 const decodeRoute = (t, e) => {
   for (
-    var n,
-      o,
-      u = 0,
-      l = 0,
-      r = 0,
-      d = [],
-      h = 0,
-      i = 0,
-      a = null,
-      c = Math.pow(10, e || 5);
+    var n, o, u = 0, l = 0, r = 0, d = [], h = 0, i = 0, a = null, c = Math.pow(10, e || 5);
     u < t.length;
 
   ) {
@@ -111,28 +99,21 @@ const decodeRoute = (t, e) => {
     (n = 1 & i ? ~(i >> 1) : i >> 1), (h = i = 0);
     do (a = t.charCodeAt(u++) - 63), (i |= (31 & a) << h), (h += 5);
     while (a >= 32);
-    (o = 1 & i ? ~(i >> 1) : i >> 1),
-      (l += n),
-      (r += o),
-      d.push([l / c, r / c]);
+    (o = 1 & i ? ~(i >> 1) : i >> 1), (l += n), (r += o), d.push([l / c, r / c]);
   }
-  return (d = d.map(function(t) {
-    return { latitude: t[0], longitude: t[1] };
-  }));
+  return (d = d.map((t) => ({ latitude: t[0], longitude: t[1] })));
 };
 
-export const backToFeed = () => {
-  return { type: CLEAN_STATE };
-};
+export const backToFeed = () => ({ type: CLEAN_STATE });
 
 export const changeSubscription = (partyId, value) => {
-  var userId = firebase.auth().currentUser.uid;
+  const userId = firebase.auth().currentUser.uid;
   return dispatch => {
     firebase
       .app()
       .database()
-      .ref("subs/" + partyId)
-      .child("users")
+      .ref(`subs/${partyId}`)
+      .child('users')
       .update({ [userId]: value })
       .then(dispatch({ type: CHANGE_USER_SUBSCRIPTION, payload: value }))
       .catch(error => console.log(error));
@@ -140,14 +121,14 @@ export const changeSubscription = (partyId, value) => {
 };
 
 export const getSubscription = partyId => {
-  var userId = firebase.auth().currentUser.uid;
+  const userId = firebase.auth().currentUser.uid;
   return dispatch => {
     firebase
       .app()
       .database()
-      .ref("subs/" + partyId)
-      .child("users")
-      .once("value")
+      .ref(`subs/${partyId}`)
+      .child('users')
+      .once('value')
       .then(snapshot => {
         let response = false;
         if (snapshot.val() != null) {
@@ -168,7 +149,7 @@ export const getSubscription = partyId => {
 };
 
 export const getOwner = orgId => {
-  var userId = firebase.auth().currentUser.uid;
+  const userId = firebase.auth().currentUser.uid;
   return dispatch => {
     if (orgId === userId) {
       dispatch({ type: EVENT_OWNER });
