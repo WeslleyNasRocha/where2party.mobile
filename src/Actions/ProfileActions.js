@@ -21,7 +21,7 @@ export const profileImageChange = ({ path, size, data, mime }) => {
 };
 
 export const saveProfile = ({ ProfileImagePath, ProfileImageMime, UserName, LastName }) => {
-  console.log({ ProfileImagePath, ProfileImageMime, UserName, LastName });
+  // console.log({ ProfileImagePath, ProfileImageMime, UserName, LastName });
   const path = ProfileImagePath.replace('file://', '');
   const user = Firebase.auth().currentUser.uid;
   return dispatch => {
@@ -52,7 +52,7 @@ export const saveProfile = ({ ProfileImagePath, ProfileImageMime, UserName, Last
         return { type: null };
     }
 
-    console.log(image);
+    // console.log(image);
 
     Blob.build(rnfbURI, { type: `${ProfileImageMime}` }).then(blob => {
       Firebase.storage()
@@ -86,10 +86,10 @@ export const changeField = ({ prop, value }) => ({
   payload: { prop, value }
 });
 
-export const getProfile = uid => 
+export const getProfile = uid =>
   //console.log(uid);
 
-   dispatch => {
+  dispatch => {
     Firebase.app()
       .database()
       .ref('usersProfiles')
@@ -105,7 +105,7 @@ export const getProfile = uid =>
           .child(`${ImagePath}`)
           .getDownloadURL()
           .then(url => {
-            console.log(`url da imagem: ${url}`);
+            // console.log(`url da imagem: ${url}`);
             dispatch({ type: PROFILE_DATA_FETCH, payload: { uri: url, UserName, LastName } });
           })
           .catch(error => console.log(error));

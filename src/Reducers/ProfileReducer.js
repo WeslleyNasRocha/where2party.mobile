@@ -34,14 +34,14 @@ export default (state = INITIAL_STATE, action) => {
         Error: 'Arquivo muito grande'
       };
     case CHANGE_PROFILE_FIELD:
-      console.log(action.payload);
+      //console.log(action.payload);
       return { ...state, [action.payload.prop]: action.payload.value };
     case PROFILE_UPDATE_ATTEMPT:
       return { ...state, Loading: true };
     case PROFILE_UPDATE_SUCCESS:
       return { ...state, Loading: false };
     case PROFILE_DATA_FETCH:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         UserName: action.payload.UserName,

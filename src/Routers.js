@@ -14,6 +14,7 @@ import EventScreen from './Components/Event/EventScreen';
 import EditEvent from './Components/Event/EditEvent';
 
 import EditProfile from './Components/Profile/ProfileEdit';
+import SearchMap from './Components/Event/Components/SearchMap';
 
 const Routers = () => (
   <Router hideNavBar>
@@ -33,6 +34,7 @@ const Routers = () => (
         <Scene key="EventScreen" initial component={EventScreen} hideNavBar />
         <Scene key="EditEvent" component={EditEvent} hideNavBar />
       </Scene>
+      <Scene key="SearchMap" component={SearchMap} hideNavBar />
       <Scene key="Profile" hideNavBar>
         <Scene key="ProfileEdit" hideNavBar component={EditProfile} />
       </Scene>

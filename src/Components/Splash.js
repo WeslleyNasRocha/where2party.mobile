@@ -7,7 +7,7 @@ class Splash extends Component {
   componentDidMount() {
     AsyncStorage.getItem('user_data').then(userDataJson => {
       const userData = JSON.parse(userDataJson);
-      console.log(userData);
+      // console.log(userData);
       if (userData != null) {
         const userId = userData.uid;
         Actions.Feed({ type: 'replace', userId });

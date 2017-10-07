@@ -17,32 +17,29 @@ import {
 } from './Types';
 
 export const formValueChanged = ({ prop, value }) => ({
-    type: FORM_VALUE_CHANGED,
-    payload: { prop, value }
-  });
+  type: FORM_VALUE_CHANGED,
+  payload: { prop, value }
+});
 
-export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+export const saveGpsLocation = ({
+  latitude,
+  longitude,
+  latitudeDelta,
+  longitudeDelta,
+  Address
+}) => {
   console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
   return dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
       payload: { latitude, longitude, latitudeDelta, longitudeDelta }
     });
-    Geocoder.setApiKey('AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI'); // use a valid API key
 
-    console.log(Geocoder);
-    Geocoder.getFromLatLng(latitude, longitude).then(
-      json => {
-        dispatch({
-          type: CONVERT_GPS_TO_ADDRESS,
-          payload: json.results[0].formatted_address
-        });
-        Actions.pop();
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    dispatch({
+      type: CONVERT_GPS_TO_ADDRESS,
+      payload: Address
+    });
+    Actions.pop();
   };
 };
 
@@ -134,9 +131,9 @@ export const eventCreated = ({
 };
 
 export const dateTimeModalStatus = status => ({
-    type: DATE_TIME_STATUS,
-    payload: status
-  });
+  type: DATE_TIME_STATUS,
+  payload: status
+});
 
 export const dateTimeConfirm = date => {
   const data = new Date(date);
@@ -155,5 +152,5 @@ export const eventImageChange = ({ path, size, data, mime }) => {
 };
 
 export const cancelForm = () => ({
-    type: CANCEL_FORM_EVENT
-  });
+  type: CANCEL_FORM_EVENT
+});
