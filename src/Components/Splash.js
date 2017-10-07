@@ -7,12 +7,12 @@ class Splash extends Component {
   componentDidMount() {
     AsyncStorage.getItem('user_data').then(userDataJson => {
       const userData = JSON.parse(userDataJson);
-      console.log(userData);
+      // console.log(userData);
       if (userData != null) {
         const userId = userData.uid;
         Actions.Feed({ type: 'replace', userId });
       } else {
-        Actions.auth({ type: "replace" });
+        Actions.auth({ type: 'replace' });
       }
     });
   }
@@ -29,8 +29,8 @@ class Splash extends Component {
 const styles = {
   BackSplash: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     height: null,
     width: null
   }

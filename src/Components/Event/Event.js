@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Actions } from "react-native-router-flux";
-import { View, Image, Text, TouchableWithoutFeedback } from "react-native";
-import { Card, CardItem, Right, Icon, Body } from "native-base";
-import firebase from "firebase";
+import React, { Component } from 'react';
+import { Actions } from 'react-native-router-flux';
+import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { Card, CardItem, Right, Icon, Body } from 'native-base';
+import firebase from 'firebase';
 
 class Event extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Event extends Component {
   componentWillMount = () => {
     firebase
       .storage()
-      .ref("eventImages")
+      .ref('eventImages')
       .child(`${this.props.eventItem.image}`)
       .getDownloadURL()
       .then(url => {
@@ -49,7 +49,7 @@ class Event extends Component {
             <Image style={style.imageBanner} source={this.state.imgUrl} />
           </CardItem>
           <View>
-            <CardItem style={{ alignSelf: "center" }}>
+            <CardItem style={{ alignSelf: 'center' }}>
               <Text style={{ fontSize: 30 }} numberOfLines={1}>
                 {Titulo}
               </Text>

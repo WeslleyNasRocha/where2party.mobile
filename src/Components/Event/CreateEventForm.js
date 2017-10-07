@@ -25,6 +25,7 @@ import {
   StyleProvider
 } from 'native-base';
 
+import SearchMap from './Components/SearchMap';
 import { event } from '../../Reducers';
 import {
   eventCreated,
@@ -59,6 +60,10 @@ class CreateEventForm extends Component {
       ImageMime,
       ImagePath
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props.Address);
   }
 
   imagePick() {
@@ -129,9 +134,20 @@ class CreateEventForm extends Component {
               />
             </Item>
             <Item>
-              <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Local</Label>
-              <Input editable={false} value={this.props.Address} />
-              <Icon active onPress={() => Actions.map()} name="pin" />
+              <Button
+                style={{ marginLeft: -15, width: '100%' }}
+                transparent
+                onPress={() => {
+                  Actions.SearchMap();
+                }}
+              >
+                <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Local</Label>
+                <Text numberOfLines={1} style={{ color: '#fff', paddingLeft: 20, width: '100%' }}>
+                  {this.props.Address}
+                </Text>
+
+                {/* <Icon active onPress={() => Actions.map()} name="pin" /> */}
+              </Button>
             </Item>
             <Item>
               <Label style={{ color: 'rgba(255,255,255,0.6)' }}>Descrição</Label>

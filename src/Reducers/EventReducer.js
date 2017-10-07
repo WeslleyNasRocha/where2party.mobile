@@ -33,11 +33,13 @@ export default (state = EventInitialState, action) => {
         [action.payload.prop]: action.payload.value
       };
     case SAVE_GPS_LOCALE:
+      console.log(action.payload);
       return {
         ...state,
         Local: action.payload
       };
     case CONVERT_GPS_TO_ADDRESS:
+      console.log(action.payload);
       return {
         ...state,
         Address: action.payload

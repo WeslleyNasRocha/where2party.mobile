@@ -11,7 +11,7 @@ import { feed } from '../../Reducers';
 class EventList extends Component {
   componentWillMount = () => {
     this.props.eventsFetch();
-    console.log(this.props);
+    //console.log(this.props);
     //this.createDataSource(this.props);
   };
 
