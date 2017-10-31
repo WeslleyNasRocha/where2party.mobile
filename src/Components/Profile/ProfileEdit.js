@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import ImagePicker from "react-native-image-crop-picker";
-import Spinner from "react-native-loading-spinner-overlay";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {
   Container,
   Header,
@@ -13,9 +13,9 @@ import {
   Item,
   Label,
   Input
-} from "native-base";
-import { profile } from "../../Reducers";
-import { profileImageChange, saveProfile, changeField } from "../../Actions";
+} from 'native-base';
+import { profile } from '../../Reducers';
+import { profileImageChange, saveProfile, changeField } from '../../Actions';
 
 class ProfileEdit extends Component {
   imagePick() {
@@ -23,7 +23,7 @@ class ProfileEdit extends Component {
       width: 200,
       height: 200,
       cropping: true,
-      mediaType: "photo",
+      mediaType: 'photo',
       includeBase64: true,
       cropperCircleOverlay: true
     }).then(image => {
@@ -35,12 +35,7 @@ class ProfileEdit extends Component {
 
   onSave() {
     console.log(this.props);
-    const {
-      ProfileImagePath,
-      ProfileImageMime,
-      UserName,
-      LastName
-    } = this.props;
+    const { ProfileImagePath, ProfileImageMime, UserName, LastName } = this.props;
 
     this.props.saveProfile({
       ProfileImagePath,
@@ -66,11 +61,11 @@ class ProfileEdit extends Component {
             width: 200,
             height: 200,
             marginTop: 25,
-            alignSelf: "center",
-            justifyContent: "center"
+            alignSelf: 'center',
+            justifyContent: 'center'
           }}
           onPress={() => {
-            console.log("change image");
+            console.log('change image');
             this.imagePick();
           }}
         >
@@ -88,27 +83,25 @@ class ProfileEdit extends Component {
           <Item floatingLabel>
             <Label>Nome</Label>
             <Input
-              onChangeText={Text =>
-                this.props.changeField({ prop: "UserName", value: Text })}
+              onChangeText={Text => this.props.changeField({ prop: 'UserName', value: Text })}
               value={this.props.UserName}
             />
           </Item>
           <Item floatingLabel last>
             <Label>Sobrenome</Label>
             <Input
-              onChangeText={Text =>
-                this.props.changeField({ prop: "LastName", value: Text })}
+              onChangeText={Text => this.props.changeField({ prop: 'LastName', value: Text })}
               value={this.props.LastName}
             />
           </Item>
         </Form>
         <Button
           style={{
-            alignSelf: "stretch",
+            alignSelf: 'stretch',
             marginLeft: 10,
             marginRight: 10,
             marginTop: 30,
-            justifyContent: "center"
+            justifyContent: 'center'
           }}
           onPress={() => {
             this.onSave();

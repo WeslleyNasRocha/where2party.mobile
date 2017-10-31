@@ -19,6 +19,9 @@ class Feed extends Component {
             <Title style={{ alignSelf: 'center', marginLeft: 65 }}>Eventos</Title>
           </Body>
           <Right>
+            <Button transparent>
+              <Icon name="ios-refresh" size={30} color={'#ffffff'} />
+            </Button>
             <Button
               transparent
               onPress={() => {
