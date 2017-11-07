@@ -89,7 +89,20 @@ const loginUserSuccess = (dispatch, user) => {
 
   AsyncStorage.setItem('user_data', JSON.stringify(user));
 
-  Actions.Profile({ type: 'reset' });
+  console.log(JSON.stringify(user));
+
+  firebase
+    .database()
+    .ref('usersProfiles')
+    .once('value')
+    .then(snapshot => {
+      console.log(snapshot);
+      if (snapshot.child(`${user.uid}`).exist()) {
+        Actions.Feed({ type: 'reset' });
+      } else {
+        Actions.Profile({ type: 'reset' });
+      }
+    });
 };
 
 export const logout = () => dispatch => {

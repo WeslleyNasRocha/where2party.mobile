@@ -13,7 +13,7 @@ import {
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_CHANGE,
   EVENT_IMAGE_OVERSIZE,
-  EVENT_SCREEN_LOAD_IMAGE
+  EVENT_EDIT
 } from './Types';
 
 export const formValueChanged = ({ prop, value }) => ({
@@ -52,7 +52,8 @@ export const eventCreated = ({
   Data,
   ImageData,
   ImagePath,
-  ImageMime
+  ImageMime,
+  edit = ''
 }) => {
   console.log({
     path,
@@ -64,7 +65,8 @@ export const eventCreated = ({
     Data,
     ImagePath,
     ImageData,
-    ImageMime
+    ImageMime,
+    edit
   });
   const path = ImagePath.replace('file://', '');
   const user = Firebase.auth().currentUser.uid;
@@ -104,25 +106,48 @@ export const eventCreated = ({
         .child(`${image}`)
         .put(blob, { contentType: `${ImageMime}` })
         .then(() => {
-          Firebase.database()
-            .ref('eventos')
-            .push({
-              Titulo,
-              Address,
-              Descricao,
-              Tags,
-              Local,
-              Data,
-              orgId: user,
-              image
-            })
-            .then(() => {
-              dispatch({
-                type: EVENT_CREATED
-              });
-              Actions.pop();
-            })
-            .catch(error => console.log(error));
+          if (edit === '') {
+            Firebase.database()
+              .ref('eventos')
+              .push({
+                Titulo,
+                Address,
+                Descricao,
+                Tags,
+                Local,
+                Data,
+                orgId: user,
+                image
+              })
+              .then(() => {
+                dispatch({
+                  type: EVENT_CREATED
+                });
+                Actions.pop();
+              })
+              .catch(error => console.log(error));
+          } else {
+            Firebase.database()
+              .ref('eventos')
+              .child(`${edit}`)
+              .set({
+                Titulo,
+                Address,
+                Descricao,
+                Tags,
+                Local,
+                Data,
+                orgId: user,
+                image
+              })
+              .then(() => {
+                dispatch({
+                  type: EVENT_EDIT
+                });
+                Actions.pop();
+              })
+              .catch(error => console.log(error));
+          }
           blob.close();
         })
         .catch(error => console.log(error));

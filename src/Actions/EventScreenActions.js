@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import _ from 'lodash';
 import {
   EVENT_SCREEN_LOAD_IMAGE,
   EVENT_SCREEN_GET_CURRENT_POSITION,
@@ -11,9 +12,9 @@ import {
   EVENT_OWNER
 } from './Types';
 
-export const loadImages = imgUrl => 
+export const loadImages = imgUrl =>
   //console.log(imgUrl);
-   dispatch => {
+  dispatch => {
     firebase
       .storage()
       .ref('eventImages')
@@ -101,7 +102,7 @@ const decodeRoute = (t, e) => {
     while (a >= 32);
     (o = 1 & i ? ~(i >> 1) : i >> 1), (l += n), (r += o), d.push([l / c, r / c]);
   }
-  return (d = d.map((t) => ({ latitude: t[0], longitude: t[1] })));
+  return (d = d.map(t => ({ latitude: t[0], longitude: t[1] })));
 };
 
 export const backToFeed = () => ({ type: CLEAN_STATE });

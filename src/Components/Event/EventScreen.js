@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Text, Image, View, StyleSheet } from "react-native";
-import { Actions } from "react-native-router-flux";
-import { Spinner } from "react-native-loading-spinner-overlay";
-import firebase from "firebase";
-import MapView from "react-native-maps";
-import Polyline from "@mapbox/polyline";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Text, Image, View, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { Spinner } from 'react-native-loading-spinner-overlay';
+import firebase from 'firebase';
+import MapView from 'react-native-maps';
+import Polyline from '@mapbox/polyline';
 import {
   Container,
   Header,
@@ -18,9 +18,9 @@ import {
   Right,
   Card,
   CardItem
-} from "native-base";
-import MapTools from "./Components/MapTools";
-import Subs from "./Components/Subs";
+} from 'native-base';
+import MapTools from './Components/MapTools';
+import Subs from './Components/Subs';
 import {
   loadImages,
   getMap,
@@ -28,8 +28,8 @@ import {
   changeSubscription,
   getSubscription,
   getOwner
-} from "../../Actions";
-import { eventScreen } from "../../Reducers";
+} from '../../Actions';
+import { eventScreen } from '../../Reducers';
 
 class EventScreen extends Component {
   componentWillMount = () => {
@@ -41,11 +41,11 @@ class EventScreen extends Component {
   };
 
   componentDidMount = () => {
-    let timeout = 4000;
+    const timeout = 4000;
     let animationTimeout;
 
     animationTimeout = setTimeout(() => {
-      this.focusMap(["inicio", "final"], true);
+      this.focusMap(['inicio', 'final'], true);
     }, 4000);
   };
 
@@ -66,7 +66,7 @@ class EventScreen extends Component {
   }
 
   componentWillUnmount() {
-    console.log("umounting");
+    console.log('umounting');
     this.props.backToFeed();
   }
 
@@ -75,46 +75,45 @@ class EventScreen extends Component {
       return (
         <Button transparent rounded>
           {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
-          <Icon name="ios-chatbubbles" style={{ color: "white" }} />
-        </Button>
-      );
-    } else {
-      return (
-        <Button transparent rounded>
-          {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
-          <Icon name="beer" style={{ color: "white" }} />
+          <Icon name="ios-chatbubbles" style={{ color: 'white' }} />
         </Button>
       );
     }
+    return (
+      <Button transparent rounded>
+        {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
+        <Icon name="beer" style={{ color: 'white' }} />
+      </Button>
+    );
   }
 
   renderButton(sub) {
     if (!sub) {
       return (
         <Button
-          style={{ justifyContent: "center", alignSelf: "stretch" }}
+          style={{ justifyContent: 'center', alignSelf: 'stretch' }}
           onPress={() => this.subscribeButtonPress()}
         >
           <Icon name="beer" />
-          <Text style={{ color: "#fff", fontSize: 20 }}>Bora !!!</Text>
-        </Button>
-      );
-    } else {
-      return (
-        <Button
-          style={{ justifyContent: "center", alignSelf: "stretch" }}
-          onPress={() => this.subscribeButtonPress()}
-        >
-          <Text style={{ color: "#fff", fontSize: 20 }}>Cancelar</Text>
-          <Icon name="md-close" />
+          <Text style={{ color: '#fff', fontSize: 20 }}>Bora !!!</Text>
         </Button>
       );
     }
+    return (
+      <Button
+        style={{ justifyContent: 'center', alignSelf: 'stretch' }}
+        onPress={() => this.subscribeButtonPress()}
+      >
+        <Text style={{ color: '#fff', fontSize: 20 }}>Cancelar</Text>
+        <Icon name="md-close" />
+      </Button>
+    );
   }
 
   editEvent(eventId) {
     // console.log(this.props);
-    const {
+    const { Address, Data, Descricao, Local, Titulo, imgUrl, orgId, uid } = this.props;
+    const eventProps = {
       Address,
       Data,
       Descricao,
@@ -122,20 +121,9 @@ class EventScreen extends Component {
       Titulo,
       imgUrl,
       orgId,
-      ui
-    } = this.props;
-    var eventProps = {
-      Address,
-      Data,
-      Descricao,
-      Local,
-      Titulo,
-      imgUrl,
-      orgId,
-      ui
+      uid
     };
-    console.log(eventProps);
-    Actions.EditEvent(eventProps);
+    Actions.EditEvent({ cust: eventProps });
   }
 
   renderEditButton() {
@@ -145,15 +133,15 @@ class EventScreen extends Component {
         <Button
           style={{
             marginTop: -50,
-            alignSelf: "flex-end",
-            backgroundColor: "rgba(0, 0, 0, 0.7)"
+            alignSelf: 'flex-end',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)'
           }}
           onPress={() => {
             this.editEvent(this.props.uid);
           }}
         >
-          <Icon name="md-create" style={{ color: "#fff" }} />
-          <Text style={{ color: "#fff" }}>Editar</Text>
+          <Icon name="md-create" style={{ color: '#fff' }} />
+          <Text style={{ color: '#fff' }}>Editar</Text>
         </Button>
       );
     }
@@ -176,27 +164,22 @@ class EventScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={{ flexDirection: "row", marginRight: 10 }}>
-              {this.props.Titulo}
-            </Title>
+            <Title style={{ flexDirection: 'row', marginRight: 10 }}>{this.props.Titulo}</Title>
           </Body>
           <Right>{this.renderChatIcon(this.props.sub)}</Right>
         </Header>
 
         <Container style={style.containerStyle}>
-          <Content style={{ backgroundColor: "#9c27b0" }}>
+          <Content style={{ backgroundColor: '#9c27b0' }}>
             <Card>
               <CardItem cardBody>
                 <View style={{ flex: 1, height: 300 }}>
-                  <Image
-                    source={this.props.imgUrl}
-                    style={{ flex: 1, alignSelf: "stretch" }}
-                  />
+                  <Image source={this.props.imgUrl} style={{ flex: 1, alignSelf: 'stretch' }} />
                 </View>
               </CardItem>
               {this.renderEditButton()}
               <CardItem>
-                <View style={{ flex: 1, alignItems: "center" }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
                   <Text style={{ fontSize: 30 }}>{this.props.Titulo}</Text>
                 </View>
               </CardItem>
@@ -205,16 +188,14 @@ class EventScreen extends Component {
                   <View
                     style={{
                       flex: 1,
-                      flexDirection: "row",
-                      alignItems: "flex-end",
-                      alignContent: "flex-end",
+                      flexDirection: 'row',
+                      alignItems: 'flex-end',
+                      alignContent: 'flex-end',
                       marginRight: -70
                     }}
                   >
-                    <Text style={{ paddingRight: 10, fontSize: 20 }}>
-                      {this.props.Data}
-                    </Text>
-                    <Icon name="md-calendar" style={{ color: "#ccc" }} />
+                    <Text style={{ paddingRight: 10, fontSize: 20 }}>{this.props.Data}</Text>
+                    <Icon name="md-calendar" style={{ color: '#ccc' }} />
                   </View>
                 </Right>
               </CardItem>
@@ -238,8 +219,8 @@ class EventScreen extends Component {
                     toolbarEnabled
                     loadingEnabled
                   >
-                    {this.renderMarkers("inicio", this.props.currentPosition)}
-                    {this.renderMarkers("final", this.props.eventPosition)}
+                    {this.renderMarkers('inicio', this.props.currentPosition)}
+                    {this.renderMarkers('final', this.props.eventPosition)}
                     <MapView.Polyline
                       coordinates={[...this.props.route]}
                       strokeWidth={3}
@@ -254,9 +235,7 @@ class EventScreen extends Component {
                 </Body>
               </CardItem>
               <CardItem>
-                <View style={{ flex: 1 }}>
-                  {this.renderButton(this.props.sub)}
-                </View>
+                <View style={{ flex: 1 }}>{this.renderButton(this.props.sub)}</View>
               </CardItem>
               <CardItem>
                 <Subs eventId={this.props.uid} />
@@ -273,7 +252,7 @@ const style = StyleSheet.create({
   map: {
     height: 200,
     width: 385,
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     flex: 1
   },
   containerStyle: {
@@ -285,15 +264,7 @@ const style = StyleSheet.create({
 //export default EventScreen;
 
 const mapStateToProps = ({ eventScreen }) => {
-  const {
-    imgUrl,
-    currentPosition,
-    eventPosition,
-    route,
-    routeData,
-    sub,
-    owner
-  } = eventScreen;
+  const { imgUrl, currentPosition, eventPosition, route, routeData, sub, owner } = eventScreen;
   return {
     imgUrl,
     currentPosition,
