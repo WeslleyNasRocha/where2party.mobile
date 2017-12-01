@@ -18,10 +18,18 @@ export default class MainFeed extends Component {
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<Sidebar userId={this.props.userId} closeDrawer={this.closeDrawer.bind(this)} />}
+        content={
+          <Sidebar
+            userId={this.props.userId}
+            closeDrawer={this.closeDrawer.bind(this)}
+          />
+        }
         onClose={() => this.closeDrawer()}
       >
-        <Feed openDrawer={this.openDrawer.bind(this)} />
+        <Feed
+          openDrawer={this.openDrawer.bind(this)}
+          userId={this.props.userId}
+        />
       </Drawer>
     );
   }
