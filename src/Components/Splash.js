@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { View, Image, AsyncStorage } from 'react-native';
+import { Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 class Splash extends Component {
   componentDidMount() {
-    AsyncStorage.getItem('user_data').then(user_data_json => {
-      const user_data = JSON.parse(user_data_json);
-      if (user_data != null) {
-        Actions.Feed({ type: 'replace' });
+    AsyncStorage.getItem('user_data').then(userDataJson => {
+      const userData = JSON.parse(userDataJson);
+      // console.log(userData);
+      if (userData != null) {
+        const userId = userData.uid;
+        Actions.Feed({ type: 'replace', userId });
       } else {
         Actions.auth({ type: 'replace' });
       }

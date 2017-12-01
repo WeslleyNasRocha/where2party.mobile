@@ -1,10 +1,11 @@
-import variable from "./../variables/platform";
+import variable from './../variables/platform';
 
 export default (variables = variable) => {
   const labelTheme = {
-    ".focused": {
+    '.focused': {
       width: 0
     },
+    color: '#a7a7a7',
     fontSize: 17
   };
 

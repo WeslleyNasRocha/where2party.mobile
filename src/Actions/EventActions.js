@@ -12,38 +12,34 @@ import {
   DATE_TIME_CONFIRMED,
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_CHANGE,
-  EVENT_IMAGE_OVERSIZE
+  EVENT_IMAGE_OVERSIZE,
+  EVENT_EDIT
 } from './Types';
 
-export const formValueChanged = ({ prop, value }) => {
-  return {
-    type: FORM_VALUE_CHANGED,
-    payload: { prop, value }
-  };
-};
+export const formValueChanged = ({ prop, value }) => ({
+  type: FORM_VALUE_CHANGED,
+  payload: { prop, value }
+});
 
-export const saveGpsLocation = ({ latitude, longitude, latitudeDelta, longitudeDelta }) => {
+export const saveGpsLocation = ({
+  latitude,
+  longitude,
+  latitudeDelta,
+  longitudeDelta,
+  Address
+}) => {
   console.log({ latitude, longitude, latitudeDelta, longitudeDelta });
   return dispatch => {
     dispatch({
       type: SAVE_GPS_LOCALE,
       payload: { latitude, longitude, latitudeDelta, longitudeDelta }
     });
-    Geocoder.setApiKey('AIzaSyBTTaiFxUaKyVkUhCWLgjzAb46WHylI_YI'); // use a valid API key
 
-    console.log(Geocoder);
-    Geocoder.getFromLatLng(latitude, longitude).then(
-      json => {
-        dispatch({
-          type: CONVERT_GPS_TO_ADDRESS,
-          payload: json.results[0].formatted_address
-        });
-        Actions.pop();
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    dispatch({
+      type: CONVERT_GPS_TO_ADDRESS,
+      payload: Address
+    });
+    Actions.pop();
   };
 };
 
@@ -56,7 +52,8 @@ export const eventCreated = ({
   Data,
   ImageData,
   ImagePath,
-  ImageMime
+  ImageMime,
+  edit = ''
 }) => {
   console.log({
     path,
@@ -68,7 +65,8 @@ export const eventCreated = ({
     Data,
     ImagePath,
     ImageData,
-    ImageMime
+    ImageMime,
+    edit
   });
   const path = ImagePath.replace('file://', '');
   const user = Firebase.auth().currentUser.uid;
@@ -108,16 +106,48 @@ export const eventCreated = ({
         .child(`${image}`)
         .put(blob, { contentType: `${ImageMime}` })
         .then(() => {
-          Firebase.database()
-            .ref('eventos')
-            .push({ Titulo, Address, Descricao, Tags, Local, Data, orgId: user, image })
-            .then(() => {
-              dispatch({
-                type: EVENT_CREATED
-              });
-              Actions.pop();
-            })
-            .catch(error => console.log(error));
+          if (edit === '') {
+            Firebase.database()
+              .ref('eventos')
+              .push({
+                Titulo,
+                Address,
+                Descricao,
+                Tags,
+                Local,
+                Data,
+                orgId: user,
+                image
+              })
+              .then(() => {
+                dispatch({
+                  type: EVENT_CREATED
+                });
+                Actions.pop();
+              })
+              .catch(error => console.log(error));
+          } else {
+            Firebase.database()
+              .ref('eventos')
+              .child(`${edit}`)
+              .set({
+                Titulo,
+                Address,
+                Descricao,
+                Tags,
+                Local,
+                Data,
+                orgId: user,
+                image
+              })
+              .then(() => {
+                dispatch({
+                  type: EVENT_EDIT
+                });
+                Actions.pop();
+              })
+              .catch(error => console.log(error));
+          }
           blob.close();
         })
         .catch(error => console.log(error));
@@ -125,12 +155,10 @@ export const eventCreated = ({
   };
 };
 
-export const dateTimeModalStatus = status => {
-  return {
-    type: DATE_TIME_STATUS,
-    payload: status
-  };
-};
+export const dateTimeModalStatus = status => ({
+  type: DATE_TIME_STATUS,
+  payload: status
+});
 
 export const dateTimeConfirm = date => {
   const data = new Date(date);
@@ -148,8 +176,6 @@ export const eventImageChange = ({ path, size, data, mime }) => {
   return { type: EVENT_IMAGE_OVERSIZE };
 };
 
-export const cancelForm = () => {
-  return {
-    type: CANCEL_FORM_EVENT
-  };
-};
+export const cancelForm = () => ({
+  type: CANCEL_FORM_EVENT
+});

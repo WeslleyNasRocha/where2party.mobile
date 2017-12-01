@@ -6,6 +6,7 @@ import MapView from 'react-native-maps';
 
 import { saveGpsLocation } from '../../Actions';
 import { event } from '../../Reducers';
+import SearchMap from './Components/SearchMap';
 
 class Map extends Component {
   constructor(props) {
@@ -81,7 +82,6 @@ class Map extends Component {
   }
 
   render() {
-    const { region } = this.props;
     return (
       <View style={styles.container}>
         <MapView
@@ -92,6 +92,7 @@ class Map extends Component {
         >
           <MapView.Marker coordinate={this.state.marker} />
         </MapView>
+        <SearchMap />
         <Button
           transparent
           onPress={() => {
@@ -115,9 +116,8 @@ class Map extends Component {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: 400,
-    width: 400,
     justifyContent: 'flex-end',
+    marginTop: 90,
     alignItems: 'center'
   },
   map: {
