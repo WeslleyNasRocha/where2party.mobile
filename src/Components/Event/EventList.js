@@ -1,73 +1,68 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, ListView, RefreshControl } from 'react-native';
+import { View, ListView, FlatList, RefreshControl, Text } from 'react-native';
+import { List, ListItem } from 'native-base';
 import Event from './Event';
 
 import { eventsFetch } from '../../Actions';
 import { feed } from '../../Reducers';
 
 class EventList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      refreshing: false
-    };
-  }
-
   componentWillMount = () => {
     this.props.eventsFetch();
-
-    this.createDataSource(this.props);
+    //console.log(this.props);
+    //this.createDataSource(this.props);
   };
 
-  componentWillReceiveProps(nextProps) {
-    this.createDataSource(nextProps);
-    this.setState({ refreshing: false });
+  componentDidUpdate(prevProps, prevState) {
+    //console.log(this.props);
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   this.createDataSource(nextProps);
+  //   this.setState({ refreshing: false });
+  // }
+
   onRefresh() {
-    this.setState({ refreshing: true });
     this.props.eventsFetch();
   }
 
-  createDataSource({ events }) {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
+  // createDataSource({ events }) {
+  //   const ds = new ListView.DataSource({
+  //     rowHasChanged: (r1, r2) => r1 !== r2
+  //   });
 
-    this.dataSource = ds.cloneWithRows(events);
-  }
+  //   this.dataSource = ds.cloneWithRows(events);
+  // }
 
-  renderRow(eventItem) {
-    return <Event eventItem={eventItem} />;
+  _keyExtractor = (item, index) => item.uid;
+
+  renderItem({ item, index }) {
+    return <Event eventItem={item} />;
   }
 
   render() {
     //console.log(this.props);
     return (
-      <View contentContainerStyle={{ flex: 1 }}>
-        <ListView
-          enableEmptySections
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
+      <List>
+        <FlatList
+          bounces
+          data={this.props.events}
+          renderItem={this.renderItem}
+          keyExtractor={this._keyExtractor}
+          refreshing={this.props.refreshing}
+          onRefresh={this.onRefresh}
         />
-      </View>
+      </List>
     );
   }
 }
 
-const mapStateToProps = state => {
-  const events = _.map(state.feed, (val, uid) => {
-    return { ...val, uid };
-  });
-  return { events };
+const mapStateToProps = ({ feed }) => {
+  const { events, refreshing } = feed;
+  //  console.log(events);
+  return { events, refreshing };
 };
 
 export default connect(mapStateToProps, { eventsFetch })(EventList);

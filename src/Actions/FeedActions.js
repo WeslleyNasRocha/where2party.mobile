@@ -1,8 +1,8 @@
 import firebase from 'firebase';
-import { FEED_EVENTS_FETCH_SUCCESS } from './Types';
+import { FEED_EVENTS_FETCH_SUCCESS, REFRESHING_FEED } from './Types';
 
-export const eventsFetch = () => {
-  return dispatch => {
+export const eventsFetch = () => dispatch => {
+    dispatch({ type: REFRESHING_FEED });
     firebase
       .database()
       .ref('/eventos')
@@ -11,4 +11,3 @@ export const eventsFetch = () => {
       })
       .catch(error => console.log(error));
   };
-};

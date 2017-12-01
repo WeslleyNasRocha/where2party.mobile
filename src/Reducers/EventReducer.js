@@ -8,7 +8,8 @@ import {
   DATE_TIME_CONFIRMED,
   CANCEL_FORM_EVENT,
   EVENT_IMAGE_OVERSIZE,
-  EVENT_IMAGE_CHANGE
+  EVENT_IMAGE_CHANGE,
+  EVENT_EDIT
 } from '../Actions/Types';
 
 const EventInitialState = {
@@ -33,11 +34,13 @@ export default (state = EventInitialState, action) => {
         [action.payload.prop]: action.payload.value
       };
     case SAVE_GPS_LOCALE:
+      console.log(action.payload);
       return {
         ...state,
         Local: action.payload
       };
     case CONVERT_GPS_TO_ADDRESS:
+      console.log(action.payload);
       return {
         ...state,
         Address: action.payload
@@ -48,6 +51,11 @@ export default (state = EventInitialState, action) => {
         Loading: true
       };
     case EVENT_CREATED:
+      return {
+        ...state,
+        ...EventInitialState
+      };
+    case EVENT_EDIT:
       return {
         ...state,
         ...EventInitialState
