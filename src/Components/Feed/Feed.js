@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, Header, Left, Body, Right, Title, Button, Icon } from 'native-base';
+import { Container, Content, Header, Left, Body, Right, Title, Button, Icon, Segment, Text } from 'native-base';
 import EventList from '../Event/EventList';
 // Import reducer and actions
 
@@ -22,16 +22,19 @@ class Feed extends Component {
             <Button transparent>
               <Icon name="ios-refresh" size={30} color={'#ffffff'} />
             </Button>
-            <Button
-              transparent
-              onPress={() => {
-                Actions.createEvent();
-              }}
-            >
-              <Icon name="add" size={30} color={'#ffffff'} />
-            </Button>
           </Right>
         </Header>
+        <Segment style={{backgroundColor: '#6D3983'}}>
+          <Button first>
+            <Text>A-Z</Text>
+          </Button>
+          <Button>
+            <Text>Data</Text>
+          </Button>
+          <Button last active>
+            <Text>Proximidade</Text>
+          </Button>
+        </Segment>
         <Content padder>
           <EventList />
         </Content>

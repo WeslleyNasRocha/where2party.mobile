@@ -34,20 +34,6 @@ class SideBar extends Component {
               <Icon name="wine" />
               <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>Eventos</Text>
             </Button>
-            <Button
-              onPress={() => {
-                this.props.closeDrawer();
-                Actions.createEvent();
-              }}
-              iconLeft
-              block
-              style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}
-            >
-              <Icon name="add-circle" />
-              <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
-                Criar Evento
-              </Text>
-            </Button>
             <Button iconLeft block style={{ marginTop: 20, marginLeft: 5, marginRight: 5 }}>
               <Icon name="shuffle" />
               <Text style={{ color: 'rgba(255,255,255,0.8)', alignSelf: 'center' }}>
