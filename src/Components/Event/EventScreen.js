@@ -73,15 +73,13 @@ class EventScreen extends Component {
   renderChatIcon(sub) {
     if (sub) {
       return (
-        <Button transparent rounded>
-          {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
+        <Button transparent rounded> 
           <Icon name="ios-chatbubbles" style={{ color: 'white' }} />
         </Button>
       );
     }
     return (
       <Button transparent rounded>
-        {/* TODO: ROLDOFO FAÇA ESTA MERDA */}
         <Icon name="beer" style={{ color: 'white' }} />
       </Button>
     );
@@ -184,6 +182,21 @@ class EventScreen extends Component {
                 </View>
               </CardItem>
               <CardItem>
+              <Left>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'flex-start',
+                      alignContent: 'flex-start',
+                      marginRight: 0
+                    }}
+                  >
+                    <Text style={{ paddingRight: 0, fontSize: 20 }}>Tags: {this.props.Tag}</Text>
+                  </View>
+                </Left>
+              </CardItem>
+              <CardItem>
                 <Right>
                   <View
                     style={{
@@ -194,7 +207,7 @@ class EventScreen extends Component {
                       marginRight: -70
                     }}
                   >
-                    <Text style={{ paddingRight: 10, fontSize: 20 }}>{this.props.Data}</Text>
+                    <Text style={{ paddingRight: 0, fontSize: 20 }}>{this.props.Data}</Text>
                     <Icon name="md-calendar" style={{ color: '#ccc' }} />
                   </View>
                 </Right>
