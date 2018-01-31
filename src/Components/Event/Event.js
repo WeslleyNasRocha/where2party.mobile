@@ -39,9 +39,10 @@ class Event extends Component {
   }
 
   render() {
-    const { Titulo, Descricao, Local } = this.props.eventItem;
+    const { Titulo, Data, Descricao, Local } = this.props.eventItem;
     // console.log(this.props);
     // FIXME: Refresh not working
+    if(Titulo != ""){
     return (
       <TouchableWithoutFeedback onPress={() => this.openEvent()}>
         <Card>
@@ -56,7 +57,7 @@ class Event extends Component {
             </CardItem>
             <CardItem>
               <Body>
-                <Text numberOfLines={2}> {Descricao}</Text>
+                <Text numberOfLines={2}> {Data}</Text>
               </Body>
               <Right>
                 <Icon name="pin" onPress={() => this.goToMap(Local)} />
@@ -66,6 +67,9 @@ class Event extends Component {
         </Card>
       </TouchableWithoutFeedback>
     );
+    }else{
+      return(null);
+    }
   }
 }
 const style = {
